@@ -1052,37 +1052,69 @@ textarea.form-control {
 }
 
 @media (max-width: 768px) {
+  .hero-section {
+    min-height: 100svh;
+    padding-top: 76px;
+    padding-bottom: 40px;
+    align-items: center;
+  }
   .hero-section::before {
     background: linear-gradient(
       180deg,
-      rgba(14, 13, 11, 0.78) 0%,
-      rgba(14, 13, 11, 0.65) 60%,
-      rgba(14, 13, 11, 0.25) 88%,
-      transparent 100%
+      rgba(12, 11, 10, 0.84) 0%,
+      rgba(12, 11, 10, 0.72) 42%,
+      rgba(12, 11, 10, 0.40) 75%,
+      rgba(12, 11, 10, 0.12) 100%
     );
   }
-  .hero-title {
-    font-size: clamp(30px, 8.2vw, 44px);
-    line-height: 1.1;
-    margin-bottom: 18px;
-  }
   .hero-content {
-    padding: 40px 0 50px;
+    padding: 30px 0 20px;
+    max-width: 100%;
   }
   .hero-eyebrow {
-    font-size: 10px;
-    letter-spacing: 0.18em;
-    margin-bottom: 16px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    font-weight: 600;
+    color: #FFFFF0 !important;
+    padding: 6px 14px;
+    background: rgba(16, 14, 12, 0.65);
+    border: 1px solid rgba(255, 255, 240, 0.28);
+    border-radius: 30px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    margin-bottom: 20px;
+  }
+  .hero-title {
+    font-size: clamp(42px, 11.5vw, 58px);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    color: #FFFFF0 !important;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.85), 0 1px 3px rgba(0, 0, 0, 0.95);
+    margin-bottom: 18px;
+  }
+  .hero-title em {
+    font-style: italic;
+    font-weight: 600;
+    color: #FFFFF0 !important;
   }
   .hero-tagline {
-    font-size: 13px;
-    letter-spacing: 0.12em;
-    margin-bottom: 14px;
+    font-size: clamp(14px, 3.6vw, 16px);
+    letter-spacing: 0.16em;
+    font-weight: 600;
+    color: #FFFFF0 !important;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9);
+    margin-bottom: 16px;
   }
   .hero-desc {
-    font-size: 15px;
-    line-height: 1.6;
-    margin-bottom: 28px;
+    font-size: clamp(15.5px, 3.8vw, 17.5px);
+    line-height: 1.62;
+    font-weight: 500;
+    color: #FAF8F5 !important;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85);
+    margin-bottom: 30px;
   }
   .hero-actions {
     flex-direction: column;
@@ -1093,7 +1125,10 @@ textarea.form-control {
   .hero-actions .btn {
     width: 100%;
     text-align: center;
-    padding: 13px 20px;
+    padding: 15px 24px;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    font-weight: 600;
   }
   .portfolio-item:nth-child(1),
   .portfolio-item:nth-child(2),
