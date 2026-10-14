@@ -1,25 +1,31 @@
-# Dependencies
+# Node & dependencies
 node_modules/
 .next/
-dist/
+next-store/
 
-# Test screenshots & captures
-screenshots/
-screenshots_*/
-*.zip
+# Scratch, build & migration scripts
+*.mjs
+!server.mjs
+main.js
+loam-*
+restored_basic_index.html
+push.py
+git_push_output.txt
 
-# Temporary test scripts
-test_*.mjs
-snap_*.mjs
-diagnose.mjs
-capture_*.mjs
-verify_*.mjs
-update_*.mjs
-apply_*.mjs
-fix_*.mjs
+# Large unused raw encode intermediates
+assets/hero-video/*-4k.mp4
+assets/hero-video/*-opt.mp4
 
-# Environment & OS files
+# Temporary test data & screenshots
+woodwrights_*.json
+woodwrights_*.png
+*.png
+!assets/**/*.png
+!assets/*.png
+
+# OS & Editor files
 .DS_Store
 Thumbs.db
 *.log
-.env*.local
+.vscode/
+.idea/

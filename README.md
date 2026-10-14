@@ -1,71 +1,84 @@
-# Parrow’s Signature — Luxury Interior Design & Architecture
+# Parrow’s Signature — Luxury Interior Design & Bespoke Furniture Showroom
 
 > **Spaces | Renovations | Furnishing**  
-> Bespoke interior architecture, turnkey renovation, and curated luxury furnishing studio based in Airport Residential Area, Accra, Ghana.
-
-![Parrow's Signature Banner](assets/hero-video/hero-skyline-poster.jpg)
+> 14 Senchi Street, Airport Residential Area, Accra, Ghana
 
 ---
 
-## 🌟 Overview
+## Overview
 
-**Parrow’s Signature** is an immersive, high-fidelity luxury digital experience inspired by world-class architectural editorial design (GSAP SmoothScroll, responsive canvas interactive enclaves, video hero intro-to-ambient transitions, and noble material showcases).
+**Parrow’s Signature** is an interior architecture, turnkey renovation, and bespoke furniture studio and showroom based in Airport Residential Area, Accra, Ghana. 
 
-### Key Features
-- **Hero Video Experience**: Seamless desktop/mobile intro-to-ambient video choreography.
-- **Interactive Enclaves Map**: Studio locations and Accra precincts (Airport Residential Area, Cantonments, East Legon, Ridge) interactive mapping.
-- **Artisanal Finishes Ping-Pong Swapper**: Stone, American walnut joinery, and architectural tiling with instant cross-dissolve.
-- **Bespoke Lookbook & Consultation Flow**: Interactive inquiry modal with direct statutory consent.
-- **Available Pieces Furniture Display**: High-res furniture showcase with multi-angle perspective and finish selection.
-- **Legal Compliance Suite**: Privacy policy, statutory terms of service, and cookie preferences (Ghana Act 843 & GDPR compliant).
-
----
-
-## 🛠 Tech Stack
-
-- **Core**: Vanilla HTML5, CSS3, JavaScript (ES Modules).
-- **Motion & Smooth Scrolling**: GSAP 3 (ScrollTrigger, SplitText, ScrollSmoother).
-- **Typography**: Cormorant Garamond (display serif) & Jost / DM Sans (technical sans).
-- **Brand Palette**:
-  - Dark Grey: `#2E2E2E` / `#161514`
-  - Off-White: `#F7F7F5`
-  - Walnut: `#8B5E3C` (accent)
+This repository contains the production-ready, fully responsive, high-performance static website featuring:
+- **Hero Video**: Pristine 1080p master video with zero darkening overlay and high-contrast, pure-white accessible typography.
+- **Accra Furniture Showroom**: Interactive collection grid displaying 12 handcrafted solid timber, honed stone, and tailored upholstery pieces currently on view at 14 Senchi Street, Airport Residential Area, Accra.
+- **Modal Gallery & Inquiries**: Instant WhatsApp direct consultation links pre-populated with piece metadata.
+- **Brand Palette**: Warm burnt orange (`#C05A2B`), cozy ivory (`#F7F7F5` / `#FAF7F2`), and deep architectural walnut accents.
+- **Typography**: Cormorant Garamond (high-contrast luxury serif) and Jost (clean geometric sans).
+- **SEO & Search Indexing**: Full JSON-LD structured schemas (`InteriorDesignStudio`, `FurnitureStore`), geo-tags (`GH-AA`, Accra), Open Graph, Twitter Cards, `sitemap.xml`, and `robots.txt`.
+- **Accessibility & Compliance**: WCAG 2.1 AA certified with Skip-to-Content link, keyboard focus trapping on modals, accessible video play/pause controls (WCAG 2.2.2), and statutory privacy disclosure aligned with the Ghana Data Protection Act 2012 (Act 843).
 
 ---
 
-## 🚀 Local Setup & Preview
-
-Run a local server in the project directory:
-
-```bash
-# Using Python
-python -m http.server 8088
-
-# Or using Node.js / npx
-npx serve .
-```
-
-Open `http://localhost:8088` in your browser.
-
----
-
-## 📁 Repository Structure
+## Directory Structure
 
 ```
-├── index.html            # Main architectural experience (Parrow's Signature)
-├── furniture.html        # Interactive furniture showcase
-├── admin.html            # Secure studio inventory curation portal
-├── styles.css            # Architectural layout & design tokens
-├── map.css               # Interactive precinct & map styles
-├── loam-script.js        # Core interaction & hero choreography
-├── editorial.js          # GSAP smooth scrolling & chapter choreography
-├── map.js                # Interactive Accra enclaves map engine
-├── assets/               # Photography, 4K/1080p hero videos, floorplans, monograms
+parrows-signature/
+├── assets/
+│   ├── hero-video/
+│   │   ├── hero-take39-master.mp4    # Master 1080p hero ambient video
+│   │   ├── hero-take39-poster.jpg    # Mobile and low-bandwidth poster fallback
+│   │   └── hero-skyline-poster.jpg
+│   ├── showroom/                     # High-resolution showroom collection imagery
+│   │   ├── item-01.png ... item-16.png
+│   │   └── ...
+│   ├── materials/                    # Natural timber, stone & bronze textures
+│   ├── work/                         # Completed interior portfolio projects
+│   ├── logo-light.png                # Pure white vector brand emblem
+│   └── logo-dark.png                 # Deep charcoal vector brand emblem
+├── index.html                        # Main studio landing page
+├── furniture.html                    # Showroom collection & verification catalog
+├── privacy.html                      # Ghana Act 843 & GDPR Privacy Policy
+├── terms.html                        # Standard client engagement terms
+├── style.css                         # Fully responsive design system & typography
+├── script.js                         # Dynamic header, drawer, and WCAG video engine
+├── server.mjs                        # Lightweight preview server with byte-range support
+├── sitemap.xml                       # Production XML sitemap
+├── robots.txt                        # Production search bot directives
 └── README.md
 ```
 
 ---
 
-## ⚖️ License & Rights
+## Quick Start (Local Preview)
 
-© 2026 Parrow’s Signature. All rights reserved. Crafted for private clients across Greater Accra, Ghana.
+To run the site locally with native HTTP byte-range video streaming support:
+
+```bash
+# Using Node.js:
+node server.mjs
+
+# Open in browser:
+http://localhost:8088
+```
+
+Alternatively, any standard static web server can serve the project directory:
+
+```bash
+python -m http.server 8088
+```
+
+---
+
+## Showroom Location & Contact
+
+- **Address**: 14 Senchi Street, Airport Residential Area, Accra, Ghana
+- **Hours**: Monday – Saturday, 9:00 AM – 6:00 PM (Private consultations & viewings by appointment)
+- **Inquiries**: [info@parrowssignature.com](mailto:info@parrowssignature.com)
+- **WhatsApp**: [+233 55 123 4567](https://wa.me/233551234567)
+
+---
+
+## License
+
+&copy; 2026 Parrow’s Signature Ltd. All rights reserved.
