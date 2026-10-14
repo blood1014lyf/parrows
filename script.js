@@ -67,33 +67,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 3. WCAG 2.2.2 Ambient Video Pause/Play Control & prefers-reduced-motion
-  if (heroVideo && videoToggle) {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // 3. Ambient Hero Video Autoplay Assurance
+  if (heroVideo) {
+    heroVideo.muted = true;
+    heroVideo.setAttribute('playsinline', '');
+    heroVideo.setAttribute('autoplay', '');
+    heroVideo.setAttribute('loop', '');
 
-    const setVideoState = (play) => {
-      if (play) {
-        heroVideo.play().catch(() => {});
-        videoIconPause.style.display = 'block';
-        videoIconPlay.style.display = 'none';
-        videoToggleText.textContent = 'Pause Motion';
-        videoToggle.setAttribute('aria-pressed', 'false');
-      } else {
-        heroVideo.pause();
-        videoIconPause.style.display = 'none';
-        videoIconPlay.style.display = 'block';
-        videoToggleText.textContent = 'Play Motion';
-        videoToggle.setAttribute('aria-pressed', 'true');
+    const tryPlay = () => {
+      const p = heroVideo.play();
+      if (p !== undefined) {
+        p.catch(() => {
+          const resume = () => {
+            heroVideo.play().catch(() => {});
+            ['touchstart', 'click', 'scroll', 'keydown'].forEach(evt => {
+              window.removeEventListener(evt, resume);
+            });
+          };
+          ['touchstart', 'click', 'scroll', 'keydown'].forEach(evt => {
+            window.addEventListener(evt, resume, { passive: true });
+          });
+        });
       }
     };
 
-    if (prefersReducedMotion) {
-      setVideoState(false);
-    }
-
-    videoToggle.addEventListener('click', () => {
-      const isPaused = heroVideo.paused;
-      setVideoState(isPaused);
+    tryPlay();
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && heroVideo.paused) {
+        heroVideo.play().catch(() => {});
+      }
     });
   }
 

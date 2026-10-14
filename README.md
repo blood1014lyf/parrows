@@ -26,8 +26,8 @@ This repository contains the production-ready, fully responsive, high-performanc
 parrows-signature/
 ├── assets/
 │   ├── hero-video/
-│   │   ├── hero-take39-master.mp4    # Master 1080p hero ambient video
-│   │   ├── hero-take39-poster.jpg    # Mobile and low-bandwidth poster fallback
+│   │   ├── hero-take45-master.mp4    # Master ambient hero video (Transition Studio Take 45)
+│   │   ├── hero-take45-poster.jpg    # Mobile and low-bandwidth poster fallback
 │   │   └── hero-skyline-poster.jpg
 │   ├── showroom/                     # High-resolution showroom collection imagery
 │   │   ├── item-01.png ... item-16.png

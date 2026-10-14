@@ -1031,13 +1031,6 @@ textarea.form-control {
     text-align: center;
     padding: 13px 20px;
   }
-  .hero-video-toggle {
-    bottom: 16px;
-    right: 16px;
-    padding: 6px 12px;
-    font-size: 9px;
-    letter-spacing: 0.14em;
-  }
   .portfolio-item:nth-child(1),
   .portfolio-item:nth-child(2),
   .portfolio-item:nth-child(3),
@@ -1104,41 +1097,7 @@ textarea.form-control {
   outline-offset: 3px;
 }
 
-/* 3. Hero Video Play/Pause Accessible Mechanism (WCAG 2.2.2 Pause, Stop, Hide) */
-.hero-video-toggle {
-  position: absolute;
-  bottom: 28px;
-  right: 5vw;
-  z-index: 10;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(30, 30, 30, 0.65);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  color: rgba(255, 255, 255, 0.9);
-  padding: 8px 16px;
-  border-radius: 30px;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.25s var(--ease);
-}
-
-.hero-video-toggle:hover {
-  background: rgba(46, 46, 46, 0.9);
-  border-color: var(--color-walnut);
-  color: #FFFFFF;
-}
-
-.hero-video-toggle svg {
-  display: block;
-}
-
-/* 4. Form Consent & Data Protection Notice */
+/* 3. Form Consent & Data Protection Notice */
 .form-consent-group {
   margin-top: 16px;
   margin-bottom: 22px;
