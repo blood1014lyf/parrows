@@ -331,14 +331,14 @@
           .to(inner, { y: 30, opacity: 0, filter: 'blur(6px)', duration: .35, ease: 'power2.in' }, 0)
           .to(wrap, { height: 0, duration: .5, ease: 'power3.inOut' }, .1);
       }
-      swapText(document.getElementById('fmc-mode-eyebrow'), toCall ? 'Request a call back' : 'The Parrow’s Signature Lookbook');
-      swapText(document.getElementById('fmc-intro'), toCall ? 'Leave your number and we’ll phone you within one business day.' : 'Portfolio, finish palettes, and bespoke furnishing catalogs, sent directly to your inbox.');
+      swapText(document.getElementById('fmc-mode-eyebrow'), toCall ? 'Request a call back' : 'The Hammer & Wedge Lookbook');
+      swapText(document.getElementById('fmc-intro'), toCall ? 'Leave your number and we’ll phone you within one business day.' : 'Portfolio, remodelling case studies, and interior decor collections, sent directly to your inbox.');
       swapText(document.getElementById('fmc-send-label'), toCall ? 'Request a call back' : 'Send me the lookbook');
       swapText(document.getElementById('fmc-mode-label'), toCall ? '← Just send the lookbook' : 'Request a call back');
     });
 
     // submit → pipeline → the thank-you performance (no lead is ever lost silently)
-    var FALLBACK = 'Something went wrong sending your details. Please call Parrow’s Signature directly on +233 55 123 4567, and our design team will look after you.';
+    var FALLBACK = 'Something went wrong sending your details. Please call Hammer & Wedge directly on +233 55 123 4567, and our design team will look after you.';
     function showError(where) {
       var n = where.querySelector('.lead-error');
       if (!n) { n = document.createElement('p'); n.className = 'lead-error'; where.appendChild(n); }

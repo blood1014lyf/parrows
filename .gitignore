@@ -12,6 +12,11 @@ screenshots_*/
 test_*.mjs
 snap_*.mjs
 diagnose.mjs
+capture_*.mjs
+verify_*.mjs
+update_*.mjs
+apply_*.mjs
+fix_*.mjs
 
 # Environment & OS files
 .DS_Store

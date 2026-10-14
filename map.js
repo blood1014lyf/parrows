@@ -65,16 +65,16 @@ const isAmenity   = id => AMENITY_IDS.has(id);
 
 /* ── building labels on the precinct plan (positions in precinct-own coords, from the PDF) ── */
 const LABELS = [
-  {lines:['PARROW\'S','SIGNATURE'],     x:796, y:468},
-  {lines:['DESIGN','ATELIER'], x:995, y:467},
-  {lines:['LIVING &','GALLERY'],        x:935, y:712},
+  {lines:['HAMMER &','WEDGE'],          x:796, y:468},
+  {lines:['DESIGN','STUDIO'],           x:995, y:467},
+  {lines:['DECOR &','SUPPLY'],          x:935, y:712},
 ];
 
 /* which building an amenity sits in — nearest building label (shown in the detail view) */
 const BUILDINGS = [
-  {name:'Parrow\'s Signature',     x:796, y:468},
-  {name:'Design Atelier', x:995, y:467},
-  {name:'Living & Gallery',        x:935, y:712},
+  {name:'Hammer & Wedge',       x:796, y:468},
+  {name:'Design Studio',        x:995, y:467},
+  {name:'Decor & Supply',       x:935, y:712},
 ];
 const buildingFor = (x,y) => BUILDINGS.reduce((best,b)=>
   ((x-b.x)**2+(y-b.y)**2) < ((x-best.x)**2+(y-best.y)**2) ? b : best).name;
