@@ -1,0 +1,1108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#1e1e1e">
+  <title>Studio Inventory Portal — Parrow’s Signature</title>
+
+  <link rel="icon" type="image/png" href="assets/logo-dark.png">
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Admin Portal Theme */
+    body.admin-portal {
+      background-color: #181818;
+      color: #F7F7F5;
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 1. Login View */
+    .admin-login-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      background: radial-gradient(circle at 50% 30%, #262422 0%, #161616 80%);
+    }
+
+    .admin-login-box {
+      width: 100%;
+      max-width: 440px;
+      background: #222222;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 48px 40px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+
+    .admin-login-logo {
+      height: 44px;
+      margin-bottom: 24px;
+      object-fit: contain;
+    }
+
+    .admin-login-title {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      font-weight: 300;
+      color: #FFFFFF;
+      margin-bottom: 8px;
+    }
+
+    .admin-login-sub {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--color-walnut);
+      margin-bottom: 32px;
+      font-weight: 600;
+    }
+
+    .admin-input-group {
+      text-align: left;
+      margin-bottom: 22px;
+    }
+
+    .admin-input-group label {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .admin-input {
+      width: 100%;
+      padding: 14px 16px;
+      background: #191919;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 4px;
+      color: #FFFFFF;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .admin-input:focus {
+      border-color: var(--color-walnut);
+    }
+
+    .admin-login-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--color-walnut);
+      color: #FFFFFF;
+      border: 1px solid var(--color-walnut);
+      border-radius: 40px;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.25s ease;
+      margin-top: 10px;
+    }
+
+    .admin-login-btn:hover {
+      background-color: var(--color-walnut-hover);
+    }
+
+    .login-error-msg {
+      color: #e57373;
+      font-size: 12px;
+      margin-top: 14px;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .login-hint {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.35);
+      margin-top: 24px;
+      line-height: 1.6;
+    }
+
+    /* 2. Authenticated Dashboard */
+    .admin-dashboard {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+    }
+
+    .admin-dashboard.active {
+      display: flex;
+    }
+
+    /* Top Nav Bar */
+    .admin-nav-bar {
+      height: 72px;
+      background: #202020;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 4vw;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .admin-nav-left {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .admin-brand-tag {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      color: #FFFFFF;
+      font-weight: 400;
+    }
+
+    .admin-badge-secure {
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      background: rgba(139, 94, 60, 0.2);
+      border: 1px solid var(--color-walnut-border);
+      color: var(--color-walnut);
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    .admin-nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-admin-pill {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #FFFFFF;
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-admin-pill:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: #FFFFFF;
+    }
+
+    .btn-admin-logout {
+      color: #e57373;
+      border-color: rgba(229, 115, 115, 0.4);
+    }
+
+    .btn-admin-logout:hover {
+      background: rgba(229, 115, 115, 0.1);
+      border-color: #e57373;
+    }
+
+    /* Dashboard Body Layout */
+    .admin-body-container {
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 4vw 80px;
+      display: grid;
+      grid-template-columns: 460px 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    /* Left Column: Upload & Add Form Card */
+    .admin-card {
+      background: #222222;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .admin-card-header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .admin-card-title {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      font-weight: 300;
+      color: #FFFFFF;
+    }
+
+    /* Upload Drop Zone */
+    .upload-dropzone {
+      border: 2px dashed rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      padding: 28px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      background: #1a1a1a;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .upload-dropzone:hover, .upload-dropzone.dragover {
+      border-color: var(--color-walnut);
+      background: #25201d;
+    }
+
+    .upload-dropzone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .upload-icon {
+      color: var(--color-walnut);
+      margin-bottom: 8px;
+    }
+
+    .upload-prompt {
+      font-size: 12px;
+      color: #FFFFFF;
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+
+    .upload-hint {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.45);
+      letter-spacing: 0.05em;
+    }
+
+    .upload-preview-container {
+      margin-bottom: 20px;
+      border-radius: 6px;
+      overflow: hidden;
+      height: 200px;
+      position: relative;
+      display: none;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .upload-preview-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .btn-clear-preview {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(20, 20, 20, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #FFFFFF;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 10px;
+      cursor: pointer;
+    }
+
+    /* Right Column: Active Inventory Grid */
+    .inventory-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .inventory-stats-bar {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-badge-box {
+      background: #222222;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      padding: 14px 20px;
+      flex: 1;
+    }
+
+    .stat-badge-num {
+      font-family: var(--font-serif);
+      font-size: 28px;
+      color: var(--color-walnut);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-badge-label {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Inventory Items Table/Cards */
+    .inventory-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .inventory-item-row {
+      background: #222222;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      gap: 20px;
+      align-items: center;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .inventory-item-row:hover {
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .item-thumbnail-box {
+      width: 100px;
+      height: 75px;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: #151515;
+    }
+
+    .item-thumbnail-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .item-details-box {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .item-cat-tag {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--color-walnut);
+      font-weight: 600;
+    }
+
+    .item-row-title {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 400;
+      color: #FFFFFF;
+    }
+
+    .item-meta-desc {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.4;
+    }
+
+    .item-actions-box {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+    }
+
+    .btn-item-action {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #FFFFFF;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-item-delete {
+      color: #e57373;
+      border-color: rgba(229, 115, 115, 0.3);
+    }
+
+    .btn-item-delete:hover {
+      background: rgba(229, 115, 115, 0.15);
+      border-color: #e57373;
+    }
+
+    .btn-item-edit:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: #FFFFFF;
+    }
+
+    /* Confirmation Modal */
+    .confirm-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .confirm-modal-backdrop.open {
+      display: flex;
+    }
+
+    .confirm-box {
+      background: #242424;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      padding: 36px;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    .confirm-title {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      color: #FFFFFF;
+      margin-bottom: 12px;
+    }
+
+    .confirm-text {
+      font-size: 13px;
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 28px;
+    }
+
+    .confirm-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .admin-body-container {
+        grid-template-columns: 1fr;
+      }
+      .inventory-item-row {
+        grid-template-columns: 80px 1fr;
+      }
+      .item-actions-box {
+        grid-column: span 2;
+        flex-direction: row;
+        justify-content: flex-end;
+      }
+    }
+  </style>
+</head>
+<body class="admin-portal">
+
+  <!-- 1. SECURE LOGIN VIEW (VISIBLE WHEN NOT AUTHENTICATED) -->
+  <main class="admin-login-wrapper" id="loginView">
+    <div class="admin-login-box">
+      <img src="assets/logo-light.png" alt="Parrow’s Signature" class="admin-login-logo">
+      <h1 class="admin-login-title">Studio Portal</h1>
+      <div class="admin-login-sub">Secure Inventory &amp; Media Management</div>
+
+      <form id="adminLoginForm">
+        <div class="admin-input-group">
+          <label for="adminPassphrase">Studio Access Passphrase</label>
+          <input type="password" id="adminPassphrase" class="admin-input" placeholder="••••••••••••" required autocomplete="current-password" autofocus>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;text-align:left;">
+          <input type="checkbox" id="rememberSession" style="accent-color:var(--color-walnut);">
+          <label for="rememberSession" style="font-size:11px;color:rgba(255,255,255,0.7);cursor:pointer;">Remember session on this device</label>
+        </div>
+
+        <button type="submit" class="admin-login-btn" id="loginSubmitBtn">Authenticate Session</button>
+        <div class="login-error-msg" id="loginErrorMsg">Invalid studio credentials.</div>
+      </form>
+
+      <div class="login-hint">
+        Protected system for Parrow’s Signature studio personnel.<br>
+        Default studio passphrase: <strong style="color:var(--color-walnut);">parrows2026</strong>
+      </div>
+    </div>
+  </main>
+
+  <!-- 2. AUTHENTICATED DASHBOARD VIEW -->
+  <div class="admin-dashboard" id="dashboardView">
+    <!-- Top Navigation -->
+    <header class="admin-nav-bar">
+      <div class="admin-nav-left">
+        <a href="index.html" title="Studio Home">
+          <img src="assets/logo-light.png" alt="Parrow's Signature" style="height:34px;vertical-align:middle;">
+        </a>
+        <div class="admin-brand-tag">Inventory Manager</div>
+        <span class="admin-badge-secure">Authenticated · Accra Studio</span>
+      </div>
+
+      <div class="admin-nav-actions">
+        <a href="furniture.html" target="_blank" class="btn-admin-pill" title="View Public Live Carousel">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+          View Live Carousel &nearr;
+        </a>
+
+        <button type="button" class="btn-admin-pill btn-admin-logout" id="logoutBtn" title="Log out of secure session">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          Logout
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="admin-body-container">
+      
+      <!-- LEFT COLUMN: ADD / EDIT FURNITURE PIECE -->
+      <section class="admin-card">
+        <div class="admin-card-header">
+          <h2 class="admin-card-title" id="formHeaderTitle">Add Furniture Piece</h2>
+          <span id="editModeIndicator" style="display:none;font-size:10px;color:var(--color-walnut);text-transform:uppercase;letter-spacing:0.16em;font-weight:600;">Editing Piece</span>
+        </div>
+
+        <form id="furnitureUploadForm">
+          <input type="hidden" id="editingItemId" value="">
+          <input type="hidden" id="itemImageData" value="">
+
+          <!-- Upload Drop Zone -->
+          <div class="upload-dropzone" id="dropzoneBox">
+            <input type="file" id="photoFileInput" accept="image/jpeg,image/png,image/webp">
+            <div class="upload-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+            </div>
+            <div class="upload-prompt">Click to Select or Drop Photo</div>
+            <div class="upload-hint">High-resolution JPEG / PNG (Auto-compressed for web)</div>
+          </div>
+
+          <!-- Image Preview -->
+          <div class="upload-preview-container" id="previewContainer">
+            <img id="previewImg" src="" alt="Piece Preview">
+            <button type="button" class="btn-clear-preview" id="clearPhotoBtn">Remove Photo</button>
+          </div>
+
+          <!-- Existing Asset Selector (Alternative to uploading) -->
+          <div class="admin-input-group">
+            <label for="assetSelector">Or Select From Studio Archive</label>
+            <select id="assetSelector" class="admin-input">
+              <option value="">-- Choose Existing Asset (Optional) --</option>
+              <option value="assets/INT_Storage.jpg">Walnut Wardrobe &amp; Joinery (INT_Storage.jpg)</option>
+              <option value="assets/INT01_Penthouse-Living.jpg">Penthouse Sectional Lounge (INT01_Penthouse-Living.jpg)</option>
+              <option value="assets/INT03_Courtyard-Living-Dining.jpg">Courtyard Dining &amp; Lounge (INT03_Courtyard.jpg)</option>
+              <option value="assets/finishes/stone.jpg">Honed Roman Travertine (finishes/stone.jpg)</option>
+              <option value="assets/INT04_Kitchen-Light.jpg">Kitchen Island &amp; Stools (INT04_Kitchen-Light.jpg)</option>
+              <option value="assets/COM03_Office.jpg">Executive Office Suite (COM03_Office.jpg)</option>
+              <option value="assets/EXT_Terrace.jpg">Terrace Verandah Dining (EXT_Terrace.jpg)</option>
+              <option value="assets/INT05_Bathroom-Light.jpg">Honed Vanity Suite (INT05_Bathroom-Light.jpg)</option>
+            </select>
+          </div>
+
+          <!-- Piece Title -->
+          <div class="admin-input-group">
+            <label for="pieceTitle">Piece Title *</label>
+            <input type="text" id="pieceTitle" class="admin-input" placeholder="e.g. The Cantonments Low Credenza" required>
+          </div>
+
+          <!-- Category -->
+          <div class="admin-input-group">
+            <label for="pieceCategory">Category *</label>
+            <select id="pieceCategory" class="admin-input" required>
+              <option value="Credenzas & Storage">Credenzas &amp; Storage</option>
+              <option value="Seating & Lounges">Seating &amp; Lounges</option>
+              <option value="Dining & Tables">Dining &amp; Tables</option>
+              <option value="Occasional & Accent">Occasional &amp; Accent</option>
+              <option value="Kitchen & Bar Joinery">Kitchen &amp; Bar Joinery</option>
+              <option value="Executive & Study">Executive &amp; Study</option>
+              <option value="Bedrooms & Wardrobes">Bedrooms &amp; Wardrobes</option>
+            </select>
+          </div>
+
+          <!-- Materials -->
+          <div class="admin-input-group">
+            <label for="pieceMaterials">Materials Specification *</label>
+            <input type="text" id="pieceMaterials" class="admin-input" placeholder="e.g. Solid American Walnut, Antique Brass Reveals" required>
+          </div>
+
+          <!-- Dimensions -->
+          <div class="admin-input-group">
+            <label for="pieceDimensions">Dimensions (W x D x H) *</label>
+            <input type="text" id="pieceDimensions" class="admin-input" placeholder="e.g. W: 2400mm · D: 520mm · H: 760mm" required>
+          </div>
+
+          <!-- Status & Lead Time -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+            <div class="admin-input-group">
+              <label for="pieceStatus">Status *</label>
+              <select id="pieceStatus" class="admin-input" required>
+                <option value="Available in Studio">Available in Studio</option>
+                <option value="Made to Order">Made to Order</option>
+                <option value="Available (1 Suite)">Available (1 Suite)</option>
+                <option value="Commission Only">Commission Only</option>
+                <option value="Reserved">Reserved</option>
+              </select>
+            </div>
+            <div class="admin-input-group">
+              <label for="pieceLeadTime">Delivery / Lead Time</label>
+              <input type="text" id="pieceLeadTime" class="admin-input" placeholder="e.g. Immediate Delivery">
+            </div>
+          </div>
+
+          <!-- Price Guide -->
+          <div class="admin-input-group">
+            <label for="piecePriceGuide">Price Guide / Studio Notes</label>
+            <input type="text" id="piecePriceGuide" class="admin-input" placeholder="e.g. Custom Inquiries Welcome / POA">
+          </div>
+
+          <!-- Description -->
+          <div class="admin-input-group">
+            <label for="pieceDesc">Architectural Description *</label>
+            <textarea id="pieceDesc" class="admin-input" style="min-height:90px;resize:vertical;" placeholder="Describe the joinery craftsmanship, wood grain, or architectural narrative..." required></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <div style="display:flex;gap:12px;margin-top:24px;">
+            <button type="submit" class="admin-login-btn" id="submitPieceBtn" style="flex:1;">
+              Publish to Live Collection
+            </button>
+            <button type="button" class="btn-admin-pill" id="cancelEditBtn" style="display:none;">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- RIGHT COLUMN: ACTIVE COLLECTION INVENTORY -->
+      <section>
+        <div class="inventory-header-row">
+          <div>
+            <h2 style="font-family:var(--font-serif);font-size:32px;color:#FFFFFF;margin-bottom:4px;">Active Collection</h2>
+            <div style="font-size:12px;color:rgba(255,255,255,0.5);">Real-time inventory displayed on the immersive public carousel</div>
+          </div>
+
+          <button type="button" class="btn-admin-pill" id="restoreDefaultsBtn" style="font-size:10px;" title="Reset back to studio default 6 items">
+            Restore Defaults
+          </button>
+        </div>
+
+        <!-- Metric Badges -->
+        <div class="inventory-stats-bar">
+          <div class="stat-badge-box">
+            <div class="stat-badge-num" id="statTotalCount">6</div>
+            <div class="stat-badge-label">Total Pieces</div>
+          </div>
+          <div class="stat-badge-box">
+            <div class="stat-badge-num" id="statStudioCount">3</div>
+            <div class="stat-badge-label">Available in Studio</div>
+          </div>
+          <div class="stat-badge-box">
+            <div class="stat-badge-num" id="statMadeToOrderCount">3</div>
+            <div class="stat-badge-label">Made to Order</div>
+          </div>
+        </div>
+
+        <!-- Inventory List -->
+        <div class="inventory-list" id="inventoryListContainer">
+          <!-- Rendered via script -->
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- DELETE CONFIRMATION MODAL -->
+  <div class="confirm-modal-backdrop" id="deleteConfirmModal" role="dialog" aria-modal="true">
+    <div class="confirm-box">
+      <h3 class="confirm-title">Remove Furniture Piece</h3>
+      <p class="confirm-text" id="confirmDeleteText">
+        Are you sure you want to remove this piece from the live studio catalogue? This action will immediately update the public carousel.
+      </p>
+      <div class="confirm-actions">
+        <button type="button" class="btn-admin-pill" id="cancelDeleteBtn">Cancel</button>
+        <button type="button" class="admin-login-btn" id="executeDeleteBtn" style="width:auto;padding:10px 24px;background:#e57373;border-color:#e57373;">
+          Confirm Removal
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shared Store Script -->
+  <script src="furniture-store.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const { FurnitureStore, AdminAuth } = window.ParrowsStore;
+
+      // Views
+      const loginView = document.getElementById('loginView');
+      const dashboardView = document.getElementById('dashboardView');
+
+      // Login Form
+      const adminLoginForm = document.getElementById('adminLoginForm');
+      const adminPassphrase = document.getElementById('adminPassphrase');
+      const rememberSession = document.getElementById('rememberSession');
+      const loginErrorMsg = document.getElementById('loginErrorMsg');
+      const logoutBtn = document.getElementById('logoutBtn');
+
+      // Form Elements
+      const furnitureUploadForm = document.getElementById('furnitureUploadForm');
+      const formHeaderTitle = document.getElementById('formHeaderTitle');
+      const editModeIndicator = document.getElementById('editModeIndicator');
+      const editingItemId = document.getElementById('editingItemId');
+      const itemImageData = document.getElementById('itemImageData');
+      const photoFileInput = document.getElementById('photoFileInput');
+      const dropzoneBox = document.getElementById('dropzoneBox');
+      const previewContainer = document.getElementById('previewContainer');
+      const previewImg = document.getElementById('previewImg');
+      const clearPhotoBtn = document.getElementById('clearPhotoBtn');
+      const assetSelector = document.getElementById('assetSelector');
+      const submitPieceBtn = document.getElementById('submitPieceBtn');
+      const cancelEditBtn = document.getElementById('cancelEditBtn');
+
+      // Form Fields
+      const pieceTitle = document.getElementById('pieceTitle');
+      const pieceCategory = document.getElementById('pieceCategory');
+      const pieceMaterials = document.getElementById('pieceMaterials');
+      const pieceDimensions = document.getElementById('pieceDimensions');
+      const pieceStatus = document.getElementById('pieceStatus');
+      const pieceLeadTime = document.getElementById('pieceLeadTime');
+      const piecePriceGuide = document.getElementById('piecePriceGuide');
+      const pieceDesc = document.getElementById('pieceDesc');
+
+      // List Elements
+      const inventoryListContainer = document.getElementById('inventoryListContainer');
+      const statTotalCount = document.getElementById('statTotalCount');
+      const statStudioCount = document.getElementById('statStudioCount');
+      const statMadeToOrderCount = document.getElementById('statMadeToOrderCount');
+      const restoreDefaultsBtn = document.getElementById('restoreDefaultsBtn');
+
+      // Confirm Modal
+      const deleteConfirmModal = document.getElementById('deleteConfirmModal');
+      const confirmDeleteText = document.getElementById('confirmDeleteText');
+      const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+      const executeDeleteBtn = document.getElementById('executeDeleteBtn');
+      let pendingDeleteId = null;
+
+      /* -------------------------------------------------------------
+         1. Session Check & Login Handler
+         ------------------------------------------------------------- */
+      function checkAuth() {
+        if (AdminAuth.isAuthenticated()) {
+          loginView.style.display = 'none';
+          dashboardView.classList.add('active');
+          renderInventory();
+        } else {
+          loginView.style.display = 'flex';
+          dashboardView.classList.remove('active');
+          adminPassphrase.value = '';
+          adminPassphrase.focus();
+        }
+      }
+
+      adminLoginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        loginErrorMsg.style.display = 'none';
+        const res = await AdminAuth.login(adminPassphrase.value, rememberSession.checked);
+        if (res.success) {
+          checkAuth();
+        } else {
+          loginErrorMsg.textContent = res.error || 'Authentication rejected.';
+          loginErrorMsg.style.display = 'block';
+        }
+      });
+
+      logoutBtn.addEventListener('click', () => {
+        AdminAuth.logout();
+        checkAuth();
+      });
+
+      /* -------------------------------------------------------------
+         2. File Upload & Canvas Image Compression
+         ------------------------------------------------------------- */
+      async function handleFileSelected(file) {
+        if (!file || !file.type.startsWith('image/')) return;
+        try {
+          dropzoneBox.style.opacity = '0.5';
+          const compressedDataUrl = await FurnitureStore.compressImage(file, 1600, 0.82);
+          itemImageData.value = compressedDataUrl;
+          previewImg.src = compressedDataUrl;
+          previewContainer.style.display = 'block';
+          dropzoneBox.style.display = 'none';
+          dropzoneBox.style.opacity = '1';
+        } catch (err) {
+          console.error('Image compression error:', err);
+          alert('Could not process this image file. Please choose a standard JPEG or PNG.');
+          dropzoneBox.style.opacity = '1';
+        }
+      }
+
+      photoFileInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) {
+          handleFileSelected(e.target.files[0]);
+        }
+      });
+
+      // Drag and Drop
+      dropzoneBox.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropzoneBox.classList.add('dragover');
+      });
+
+      dropzoneBox.addEventListener('dragleave', () => {
+        dropzoneBox.classList.remove('dragover');
+      });
+
+      dropzoneBox.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropzoneBox.classList.remove('dragover');
+        if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+          handleFileSelected(e.dataTransfer.files[0]);
+        }
+      });
+
+      clearPhotoBtn.addEventListener('click', () => {
+        itemImageData.value = '';
+        previewImg.src = '';
+        previewContainer.style.display = 'none';
+        dropzoneBox.style.display = 'block';
+        photoFileInput.value = '';
+      });
+
+      assetSelector.addEventListener('change', () => {
+        if (assetSelector.value) {
+          itemImageData.value = assetSelector.value;
+          previewImg.src = assetSelector.value;
+          previewContainer.style.display = 'block';
+          dropzoneBox.style.display = 'none';
+        }
+      });
+
+      /* -------------------------------------------------------------
+         3. Render Active Inventory
+         ------------------------------------------------------------- */
+      function renderInventory() {
+        const items = FurnitureStore.getAll();
+
+        statTotalCount.textContent = items.length;
+        statStudioCount.textContent = items.filter(i => i.status.includes('Studio')).length;
+        statMadeToOrderCount.textContent = items.filter(i => !i.status.includes('Studio')).length;
+
+        if (items.length === 0) {
+          inventoryListContainer.innerHTML = `
+            <div style="padding:40px;text-align:center;background:#222;border-radius:6px;border:1px solid rgba(255,255,255,0.1);">
+              <h3 style="font-family:var(--font-serif);font-size:24px;margin-bottom:8px;">No Pieces in Inventory</h3>
+              <p style="font-size:13px;color:rgba(255,255,255,0.6);">Use the form on the left to add a new piece, or restore studio defaults.</p>
+            </div>
+          `;
+          return;
+        }
+
+        inventoryListContainer.innerHTML = items.map((item) => `
+          <div class="inventory-item-row" data-id="${item.id}">
+            <div class="item-thumbnail-box">
+              <img src="${item.image}" alt="${item.title}">
+            </div>
+
+            <div class="item-details-box">
+              <div class="item-cat-tag">${item.category}</div>
+              <h3 class="item-row-title">${item.title}</h3>
+              <div class="item-meta-desc">
+                <strong>Materials:</strong> ${item.materials}<br>
+                <strong>Dimensions:</strong> ${item.dimensions} · <strong>Status:</strong> <span style="color:var(--color-walnut);">${item.status}</span>
+              </div>
+            </div>
+
+            <div class="item-actions-box">
+              <button type="button" class="btn-item-action btn-item-edit" data-id="${item.id}">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+                Edit
+              </button>
+
+              <button type="button" class="btn-item-action btn-item-delete" data-id="${item.id}">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="3 6 5 6 21 6"></polyline>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+                Remove
+              </button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      /* -------------------------------------------------------------
+         4. Add / Edit Piece Form Submission
+         ------------------------------------------------------------- */
+      furnitureUploadForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const imageSrc = itemImageData.value.trim() || 'assets/INT_Storage.jpg';
+        const isEditing = Boolean(editingItemId.value);
+
+        const payload = {
+          title: pieceTitle.value.trim(),
+          category: pieceCategory.value,
+          materials: pieceMaterials.value.trim(),
+          dimensions: pieceDimensions.value.trim(),
+          status: pieceStatus.value,
+          leadTime: pieceLeadTime.value.trim() || 'Immediate Delivery',
+          priceGuide: piecePriceGuide.value.trim() || 'Custom Inquiries Welcome',
+          description: pieceDesc.value.trim(),
+          image: imageSrc
+        };
+
+        if (isEditing) {
+          FurnitureStore.update(editingItemId.value, payload);
+        } else {
+          FurnitureStore.add(payload);
+        }
+
+        resetForm();
+        renderInventory();
+      });
+
+      function resetForm() {
+        furnitureUploadForm.reset();
+        editingItemId.value = '';
+        itemImageData.value = '';
+        previewImg.src = '';
+        previewContainer.style.display = 'none';
+        dropzoneBox.style.display = 'block';
+        assetSelector.value = '';
+        formHeaderTitle.textContent = 'Add Furniture Piece';
+        submitPieceBtn.textContent = 'Publish to Live Collection';
+        editModeIndicator.style.display = 'none';
+        cancelEditBtn.style.display = 'none';
+      }
+
+      cancelEditBtn.addEventListener('click', resetForm);
+
+      /* -------------------------------------------------------------
+         5. Edit & Remove Action Listeners
+         ------------------------------------------------------------- */
+      inventoryListContainer.addEventListener('click', (e) => {
+        const editBtn = e.target.closest('.btn-item-edit');
+        if (editBtn) {
+          const item = FurnitureStore.getById(editBtn.dataset.id);
+          if (item) {
+            editingItemId.value = item.id;
+            pieceTitle.value = item.title;
+            pieceCategory.value = item.category;
+            pieceMaterials.value = item.materials;
+            pieceDimensions.value = item.dimensions;
+            pieceStatus.value = item.status;
+            pieceLeadTime.value = item.leadTime || '';
+            piecePriceGuide.value = item.priceGuide || '';
+            pieceDesc.value = item.description;
+
+            itemImageData.value = item.image;
+            previewImg.src = item.image;
+            previewContainer.style.display = 'block';
+            dropzoneBox.style.display = 'none';
+
+            formHeaderTitle.textContent = 'Edit Furniture Piece';
+            submitPieceBtn.textContent = 'Save Changes';
+            editModeIndicator.style.display = 'inline-block';
+            cancelEditBtn.style.display = 'inline-flex';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        }
+
+        const deleteBtn = e.target.closest('.btn-item-delete');
+        if (deleteBtn) {
+          const item = FurnitureStore.getById(deleteBtn.dataset.id);
+          if (item) {
+            pendingDeleteId = item.id;
+            confirmDeleteText.innerHTML = `Are you sure you want to remove <strong>"${item.title}"</strong> from the studio collection? This will remove it from the live carousel immediately.`;
+            deleteConfirmModal.classList.add('open');
+          }
+        }
+      });
+
+      cancelDeleteBtn.addEventListener('click', () => {
+        deleteConfirmModal.classList.remove('open');
+        pendingDeleteId = null;
+      });
+
+      executeDeleteBtn.addEventListener('click', () => {
+        if (pendingDeleteId) {
+          FurnitureStore.remove(pendingDeleteId);
+          deleteConfirmModal.classList.remove('open');
+          pendingDeleteId = null;
+          renderInventory();
+        }
+      });
+
+      restoreDefaultsBtn.addEventListener('click', () => {
+        if (confirm('Restore the default 6 studio showcase pieces? Any custom uploads will be replaced.')) {
+          FurnitureStore.resetToDefaults();
+          resetForm();
+          renderInventory();
+        }
+      });
+
+      // Check authentication on initial load
+      checkAuth();
+    });
+  </script>
+</body>
+</html>

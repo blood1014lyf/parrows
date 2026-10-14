@@ -1,0 +1,1321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Immersive showcase of available luxury furniture, bespoke walnut credenzas, and handcrafted architectural pieces by Parrow’s Signature in Accra, Ghana.">
+  <meta name="theme-color" content="#2E2E2E">
+  <title>Available Furniture Collection — Parrow’s Signature · Accra, Ghana</title>
+
+  <link rel="icon" type="image/png" href="assets/logo-dark.png">
+
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ==========================================================================
+       IMMERSIVE FURNITURE CAROUSEL SPECIFIC STYLES
+       ========================================================================== */
+    body.furniture-page {
+      background-color: var(--color-dark-deep);
+      color: #FFFFFF;
+      overflow-x: hidden;
+    }
+
+    .furniture-viewport {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 720px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      background: radial-gradient(circle at 65% 45%, #2a2826 0%, #171717 70%, #121212 100%);
+    }
+
+    /* Ambient Film & Texture */
+    .furniture-viewport::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(18,18,18,0.7) 0%, rgba(18,18,18,0.3) 40%, rgba(18,18,18,0.85) 100%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* Top Stage Bar */
+    .stage-top-bar {
+      position: relative;
+      z-index: 10;
+      padding: 100px 5vw 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .collection-header-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .collection-eyebrow {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      color: var(--color-walnut);
+      font-weight: 600;
+    }
+
+    .collection-title-sub {
+      font-family: var(--font-serif);
+      font-size: clamp(22px, 2.5vw, 32px);
+      font-weight: 300;
+      color: #FFFFFF;
+    }
+
+    .stage-controls-top {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .view-mode-toggle, .btn-filter-toggle {
+      background: rgba(46, 46, 46, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: rgba(255, 255, 255, 0.85);
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      cursor: pointer;
+      transition: all 0.25s var(--ease);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .view-mode-toggle:hover, .btn-filter-toggle:hover {
+      background: var(--color-walnut);
+      border-color: var(--color-walnut);
+      color: #FFFFFF;
+    }
+
+    /* Carousel Main Stage */
+    .carousel-stage {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      z-index: 3;
+      padding: 20px 5vw;
+    }
+
+    .carousel-slides-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .carousel-slide {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 5vw;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(40px) scale(0.98);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.8s;
+      pointer-events: none;
+    }
+
+    .carousel-slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .carousel-slide.prev-slide {
+      transform: translateX(-40px) scale(0.98);
+    }
+
+    /* Visual Hero Framing */
+    .slide-visual-frame {
+      position: relative;
+      height: 58vh;
+      min-height: 400px;
+      max-height: 600px;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background-color: #1a1a1a;
+      cursor: pointer;
+    }
+
+    .slide-visual-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .slide-visual-frame:hover img {
+      transform: scale(1.05);
+    }
+
+    .slide-badge-status {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      background: rgba(25, 25, 25, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #FFFFFF;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .slide-badge-status::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: #55c57a;
+    }
+
+    .slide-badge-status.made-to-order::before {
+      background-color: var(--color-walnut);
+    }
+
+    .slide-zoom-hint {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(20, 20, 20, 0.7);
+      backdrop-filter: blur(8px);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(255, 255, 255, 0.75);
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Spec Glass Card */
+    .slide-spec-card {
+      background: rgba(36, 36, 36, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 6px;
+      padding: 40px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      max-width: 540px;
+    }
+
+    .spec-eyebrow-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .spec-tag {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      color: var(--color-walnut);
+      font-weight: 600;
+    }
+
+    .spec-category {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.55);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .spec-title {
+      font-family: var(--font-serif);
+      font-size: clamp(28px, 3.2vw, 42px);
+      font-weight: 300;
+      line-height: 1.15;
+      color: #FFFFFF;
+      margin-bottom: 16px;
+    }
+
+    .spec-desc {
+      font-size: 14px;
+      line-height: 1.7;
+      color: rgba(247, 247, 245, 0.82);
+      margin-bottom: 24px;
+      font-weight: 300;
+    }
+
+    .spec-meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      padding: 20px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 28px;
+    }
+
+    .meta-field-label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--color-walnut);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .meta-field-val {
+      font-size: 12px;
+      color: #FFFFFF;
+      line-height: 1.5;
+    }
+
+    .spec-actions {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .spec-actions .btn-primary {
+      padding: 12px 28px;
+      font-size: 11px;
+    }
+
+    .spec-actions .btn-outline {
+      padding: 12px 22px;
+      font-size: 10px;
+    }
+
+    /* Floating Navigation Controls */
+    .carousel-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(35, 35, 35, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.3s var(--ease);
+    }
+
+    .carousel-nav-btn:hover {
+      background: var(--color-walnut);
+      border-color: var(--color-walnut);
+      transform: translateY(-50%) scale(1.08);
+    }
+
+    .carousel-nav-prev {
+      left: 2vw;
+    }
+
+    .carousel-nav-next {
+      right: 2vw;
+    }
+
+    /* Bottom Control Rail & Thumbnails */
+    .stage-bottom-rail {
+      position: relative;
+      z-index: 10;
+      padding: 0 5vw 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    .rail-counter-block {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      font-family: var(--font-serif);
+      min-width: 90px;
+    }
+
+    .rail-counter-current {
+      font-size: 32px;
+      color: #FFFFFF;
+      line-height: 1;
+    }
+
+    .rail-counter-divider {
+      color: var(--color-walnut);
+      font-size: 20px;
+    }
+
+    .rail-counter-total {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Progress bar */
+    .rail-progress-track {
+      flex: 1;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.14);
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+      max-width: 320px;
+    }
+
+    .rail-progress-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: var(--color-walnut);
+      width: 16.66%;
+      transition: width 0.4s var(--ease);
+    }
+
+    /* Thumbnail Strip */
+    .thumbnails-strip {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 4px;
+      scrollbar-width: none;
+    }
+
+    .thumbnails-strip::-webkit-scrollbar {
+      display: none;
+    }
+
+    .thumb-item {
+      position: relative;
+      width: 64px;
+      height: 48px;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      opacity: 0.5;
+      transition: all 0.3s var(--ease);
+      flex-shrink: 0;
+    }
+
+    .thumb-item:hover {
+      opacity: 0.85;
+      transform: translateY(-2px);
+    }
+
+    .thumb-item.active {
+      opacity: 1;
+      border-color: var(--color-walnut);
+      box-shadow: 0 0 12px rgba(139, 94, 60, 0.6);
+      transform: translateY(-4px) scale(1.05);
+    }
+
+    .thumb-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Autoplay button */
+    .autoplay-toggle-btn {
+      background: rgba(46, 46, 46, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: rgba(255, 255, 255, 0.8);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .autoplay-toggle-btn:hover {
+      background: rgba(60, 60, 60, 0.9);
+      color: #FFFFFF;
+    }
+
+    .autoplay-indicator {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .autoplay-toggle-btn.playing .autoplay-indicator {
+      background: var(--color-walnut);
+      box-shadow: 0 0 6px var(--color-walnut);
+    }
+
+    /* Modal Grid View Drawer */
+    .grid-view-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(18, 18, 18, 0.94);
+      backdrop-filter: blur(24px);
+      z-index: 1200;
+      display: none;
+      flex-direction: column;
+      padding: 60px 6vw;
+      overflow-y: auto;
+      opacity: 0;
+      transition: opacity 0.35s var(--ease);
+    }
+
+    .grid-view-modal.open {
+      display: flex;
+      opacity: 1;
+    }
+
+    .grid-view-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .grid-view-header h2 {
+      font-family: var(--font-serif);
+      font-size: 38px;
+      font-weight: 300;
+    }
+
+    .grid-view-close {
+      background: none;
+      border: none;
+      font-size: 32px;
+      color: #FFFFFF;
+      cursor: pointer;
+      padding: 6px 12px;
+      line-height: 1;
+      transition: color 0.2s ease;
+    }
+
+    .grid-view-close:hover {
+      color: var(--color-walnut);
+    }
+
+    .catalog-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 32px;
+    }
+
+    .catalog-card {
+      background: var(--color-dark-surface);
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .catalog-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--color-walnut);
+    }
+
+    .catalog-card-img {
+      height: 220px;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .catalog-card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .catalog-card:hover .catalog-card-img img {
+      transform: scale(1.06);
+    }
+
+    .catalog-card-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .catalog-card-tag {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-walnut);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .catalog-card-title {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 400;
+      margin-bottom: 8px;
+      color: #FFFFFF;
+    }
+
+    .catalog-card-mat {
+      font-size: 12px;
+      color: rgba(247, 247, 245, 0.7);
+      line-height: 1.5;
+      margin-bottom: 16px;
+      flex: 1;
+    }
+
+    .catalog-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 11px;
+    }
+
+    .catalog-card-status {
+      color: var(--color-walnut);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    /* Lightbox inspect */
+    .lightbox-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 10, 0.96);
+      backdrop-filter: blur(20px);
+      z-index: 1300;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+    }
+
+    .lightbox-modal.open {
+      display: flex;
+    }
+
+    .lightbox-modal img {
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      font-size: 36px;
+      color: #FFFFFF;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+      .furniture-viewport {
+        height: auto;
+        min-height: 100vh;
+        overflow-y: auto;
+      }
+      .carousel-stage {
+        padding: 24px 5vw;
+        min-height: 700px;
+      }
+      .carousel-slides-wrapper {
+        min-height: 700px;
+        position: relative;
+      }
+      .carousel-slide {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        position: relative;
+        inset: auto;
+        display: none;
+        transform: none !important;
+      }
+      .carousel-slide.active {
+        display: flex;
+        flex-direction: column;
+        opacity: 1;
+        visibility: visible;
+      }
+      .slide-visual-frame {
+        width: 100%;
+        height: 320px;
+        min-height: 260px;
+      }
+      .slide-spec-card {
+        max-width: 100%;
+        padding: 28px 24px;
+      }
+      .thumbnails-strip {
+        display: none;
+      }
+      .carousel-nav-btn {
+        width: 44px;
+        height: 44px;
+      }
+      .carousel-nav-prev {
+        left: 10px;
+      }
+      .carousel-nav-next {
+        right: 10px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .stage-top-bar {
+        padding-top: 88px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      .carousel-stage {
+        min-height: 620px;
+        padding: 16px 4vw;
+      }
+      .carousel-slides-wrapper {
+        min-height: 620px;
+      }
+      .slide-visual-frame {
+        height: 260px;
+      }
+      .spec-meta-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .spec-title {
+        font-size: 26px;
+      }
+      .stage-bottom-rail {
+        flex-wrap: wrap;
+        gap: 14px;
+        padding-bottom: 32px;
+      }
+    }
+  </style>
+</head>
+<body class="furniture-page" id="top">
+
+  <!-- Accessible Skip Link -->
+  <a href="#furnitureCarousel" class="skip-link">Skip to carousel content</a>
+
+  <!-- Header / Navigation (Consistent with Studio Branding) -->
+  <header class="site-header scrolled" id="siteHeader" style="background: rgba(22, 22, 22, 0.94); border-color: rgba(255, 255, 255, 0.1);">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-logo" aria-label="Parrow's Signature home">
+        <img class="logo-light" src="assets/logo-light.png" alt="Parrow’s Signature" style="display:block;">
+      </a>
+
+      <nav aria-label="Main Navigation">
+        <ul class="nav-links">
+          <li><a href="index.html#about" style="color: #FFFFFF;">The Studio</a></li>
+          <li><a href="index.html#disciplines" style="color: #FFFFFF;">Disciplines</a></li>
+          <li><a href="index.html#portfolio" style="color: #FFFFFF;">Selected Works</a></li>
+          <li><a href="furniture.html" style="color: var(--color-walnut); font-weight: 600;">Available Furniture</a></li>
+          <li><a href="index.html#contact" style="color: #FFFFFF;">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-cta">
+        <a href="index.html#contact" class="btn-cta" style="border-color: rgba(255, 255, 255, 0.4); color: #FFFFFF;">Begin a Project</a>
+      </div>
+
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation menu" aria-expanded="false" style="color:#FFFFFF;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+          <line x1="3" y1="7" x2="21" y2="7"></line>
+          <line x1="3" y1="17" x2="21" y2="17"></line>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer" id="mobileDrawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation" aria-hidden="true">
+    <ul class="mobile-nav-links">
+      <li><a href="index.html#about" class="mobile-link">The Studio</a></li>
+      <li><a href="index.html#disciplines" class="mobile-link">Disciplines</a></li>
+      <li><a href="index.html#portfolio" class="mobile-link">Selected Works</a></li>
+      <li><a href="furniture.html" class="mobile-link" style="color:var(--color-walnut);">Available Furniture</a></li>
+      <li><a href="index.html#contact" class="mobile-link">Contact</a></li>
+    </ul>
+    <div style="text-align: center;">
+      <a href="index.html#contact" class="btn btn-primary mobile-link">Begin a Project</a>
+    </div>
+  </div>
+
+  <!-- MAIN STAGE: IMMERSIVE FURNITURE CAROUSEL -->
+  <main class="furniture-viewport" id="furnitureCarousel" aria-label="Available Furniture Carousel" tabindex="0">
+    
+    <!-- Top Stage Header -->
+    <div class="stage-top-bar">
+      <div class="collection-header-meta">
+        <span class="collection-eyebrow">Studio Inventory &amp; Available Pieces</span>
+        <h1 class="collection-title-sub">The Signature <em>Collection</em></h1>
+      </div>
+
+      <div class="stage-controls-top">
+        <button type="button" class="view-mode-toggle" id="toggleGridViewBtn" aria-label="Switch to Catalog Grid view">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          Catalog Index (<span id="totalPiecesBadge">6</span>)
+        </button>
+
+        <button type="button" class="autoplay-toggle-btn playing" id="autoplayBtn" aria-label="Toggle automatic carousel rotation" aria-pressed="true">
+          <span class="autoplay-indicator"></span>
+          <span id="autoplayLabel">Autoplay On</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Carousel Center Stage -->
+    <div class="carousel-stage">
+      <!-- Prev / Next Floating Navigation -->
+      <button type="button" class="carousel-nav-btn carousel-nav-prev" id="prevSlideBtn" aria-label="Previous furniture piece">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+
+      <button type="button" class="carousel-nav-btn carousel-nav-next" id="nextSlideBtn" aria-label="Next furniture piece">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+
+      <!-- Slides Container -->
+      <div class="carousel-slides-wrapper" id="slidesWrapper" aria-live="polite">
+        <!-- Rendered dynamically by JavaScript via ParrowsStore -->
+      </div>
+    </div>
+
+    <!-- Bottom Stage Rail -->
+    <div class="stage-bottom-rail">
+      <div class="rail-counter-block" aria-label="Current slide counter">
+        <span class="rail-counter-current" id="currentSlideNum">01</span>
+        <span class="rail-counter-divider">/</span>
+        <span class="rail-counter-total" id="totalSlidesNum">06</span>
+      </div>
+
+      <div class="rail-progress-track" aria-hidden="true">
+        <div class="rail-progress-bar" id="progressBar"></div>
+      </div>
+
+      <div class="thumbnails-strip" id="thumbnailsStrip" aria-label="Jump to specific piece">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div style="font-size:11px;color:rgba(255,255,255,0.45);letter-spacing:0.12em;text-transform:uppercase;">
+        Keyboard: &larr; &rarr; to Navigate
+      </div>
+    </div>
+  </main>
+
+  <!-- GRID VIEW CATALOG MODAL / DRAWER -->
+  <div class="grid-view-modal" id="gridViewModal" role="dialog" aria-modal="true" aria-labelledby="gridCatalogTitle" aria-hidden="true">
+    <div class="grid-view-header">
+      <div>
+        <span class="collection-eyebrow">Complete Catalogue</span>
+        <h2 id="gridCatalogTitle">Curated Pieces &amp; Bespoke Works</h2>
+      </div>
+      <button type="button" class="grid-view-close" id="closeGridViewBtn" aria-label="Close catalog view">&times;</button>
+    </div>
+
+    <div class="catalog-cards-grid" id="catalogCardsGrid">
+      <!-- Populated via script -->
+    </div>
+  </div>
+
+  <!-- DIRECT INQUIRY MODAL -->
+  <div class="legal-modal-backdrop" id="pieceInquiryModal" role="dialog" aria-modal="true" aria-labelledby="pieceInquiryTitle" aria-hidden="true">
+    <div class="legal-modal-dialog">
+      <div class="legal-modal-header">
+        <h3 id="pieceInquiryTitle">Inquire About Piece</h3>
+        <button type="button" class="legal-modal-close" id="closeInquiryModalBtn" aria-label="Close inquiry dialog">&times;</button>
+      </div>
+      <div class="legal-modal-body">
+        <div style="display:flex;gap:20px;align-items:center;margin-bottom:24px;padding-bottom:18px;border-bottom:1px solid var(--border-light);">
+          <img id="inquiryPieceThumb" src="assets/INT_Storage.jpg" alt="Selected Piece" style="width:72px;height:72px;object-fit:cover;border-radius:4px;border:1px solid var(--border-light);">
+          <div>
+            <h4 id="inquiryPieceName" style="margin:0 0 4px;font-size:20px;">The Senchi Fluted Credenza</h4>
+            <div id="inquiryPieceMeta" style="font-size:12px;color:var(--text-muted-dark);">American Walnut · Available in Studio</div>
+          </div>
+        </div>
+
+        <form id="pieceInquiryForm">
+          <input type="hidden" id="inquiryPieceHidden" name="pieceName" value="">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="inqName">Your Name *</label>
+              <input type="text" id="inqName" name="name" class="form-control" placeholder="Kwame Mensah" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="inqEmail">Email Address *</label>
+              <input type="email" id="inqEmail" name="email" class="form-control" placeholder="kwame@example.com" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="inqPhone">Phone / WhatsApp</label>
+            <input type="tel" id="inqPhone" name="phone" class="form-control" placeholder="+233 55 000 0000">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="inqNotes">Message or Custom Sizing Request</label>
+            <textarea id="inqNotes" name="notes" class="form-control" placeholder="I would like to inquire about viewing this piece at the Airport Residential Area studio or requesting custom dimensions..."></textarea>
+          </div>
+          <button type="submit" class="form-submit-btn">Transmit Studio Inquiry</button>
+          <div class="form-feedback" id="inquiryFeedback" role="status" aria-live="polite">Thank you. Your inquiry for this signature piece has been recorded. Our lead designer will contact you within 24 hours.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX MODAL FOR FULL-RES INSPECTION -->
+  <div class="lightbox-modal" id="lightboxModal" role="dialog" aria-modal="true" aria-label="Image Zoom View" aria-hidden="true">
+    <button type="button" class="lightbox-close" id="closeLightboxBtn" aria-label="Close image zoom">&times;</button>
+    <img id="lightboxImg" src="" alt="Full Resolution Inspection">
+  </div>
+
+  <!-- Shared Store & Carousel Controller Script -->
+  <script src="furniture-store.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const { FurnitureStore } = window.ParrowsStore;
+      let items = FurnitureStore.getAll();
+      let currentIndex = 0;
+      let autoplayTimer = null;
+      let isAutoplay = true;
+
+      // Elements
+      const slidesWrapper = document.getElementById('slidesWrapper');
+      const thumbnailsStrip = document.getElementById('thumbnailsStrip');
+      const currentSlideNum = document.getElementById('currentSlideNum');
+      const totalSlidesNum = document.getElementById('totalSlidesNum');
+      const progressBar = document.getElementById('progressBar');
+      const totalPiecesBadge = document.getElementById('totalPiecesBadge');
+      const prevBtn = document.getElementById('prevSlideBtn');
+      const nextBtn = document.getElementById('nextSlideBtn');
+      const autoplayBtn = document.getElementById('autoplayBtn');
+      const autoplayLabel = document.getElementById('autoplayLabel');
+
+      // Grid Modal Elements
+      const gridModal = document.getElementById('gridViewModal');
+      const toggleGridBtn = document.getElementById('toggleGridViewBtn');
+      const closeGridBtn = document.getElementById('closeGridViewBtn');
+      const catalogCardsGrid = document.getElementById('catalogCardsGrid');
+
+      // Inquiry Modal Elements
+      const inquiryModal = document.getElementById('pieceInquiryModal');
+      const closeInquiryBtn = document.getElementById('closeInquiryModalBtn');
+      const pieceInquiryForm = document.getElementById('pieceInquiryForm');
+      const inquiryPieceThumb = document.getElementById('inquiryPieceThumb');
+      const inquiryPieceName = document.getElementById('inquiryPieceName');
+      const inquiryPieceMeta = document.getElementById('inquiryPieceMeta');
+      const inquiryPieceHidden = document.getElementById('inquiryPieceHidden');
+      const inquiryFeedback = document.getElementById('inquiryFeedback');
+
+      // Lightbox
+      const lightboxModal = document.getElementById('lightboxModal');
+      const lightboxImg = document.getElementById('lightboxImg');
+      const closeLightboxBtn = document.getElementById('closeLightboxBtn');
+
+      // Mobile Drawer Elements
+      const mobileToggle = document.getElementById('mobileToggle');
+      const mobileDrawer = document.getElementById('mobileDrawer');
+      if (mobileToggle && mobileDrawer) {
+        mobileToggle.addEventListener('click', () => {
+          const isOpen = mobileDrawer.classList.toggle('open');
+          mobileDrawer.setAttribute('aria-hidden', !isOpen);
+          mobileToggle.setAttribute('aria-expanded', isOpen);
+        });
+      }
+
+      /* -------------------------------------------------------------
+         Render Carousel Slides & Thumbnails
+         ------------------------------------------------------------- */
+      function renderCarousel() {
+        if (!items || items.length === 0) {
+          slidesWrapper.innerHTML = `
+            <div style="text-align:center;width:100%;padding:60px;color:rgba(255,255,255,0.7);">
+              <h2 style="font-family:var(--font-serif);font-size:32px;margin-bottom:12px;">No Pieces Currently Listed</h2>
+              <p>The studio catalogue is currently being updated.</p>
+            </div>
+          `;
+          return;
+        }
+
+        totalPiecesBadge.textContent = items.length;
+        totalSlidesNum.textContent = String(items.length).padStart(2, '0');
+
+        // Slides
+        slidesWrapper.innerHTML = items.map((item, idx) => `
+          <div class="carousel-slide ${idx === currentIndex ? 'active' : ''}" data-index="${idx}" id="slide-${item.id}">
+            <div class="slide-visual-frame" data-img="${item.image}" aria-label="Click to enlarge ${item.title}">
+              <img src="${item.image}" alt="${item.title}" loading="${idx === 0 ? 'eager' : 'lazy'}">
+              <div class="slide-badge-status ${item.status.includes('Made to Order') ? 'made-to-order' : ''}">
+                ${item.status}
+              </div>
+              <div class="slide-zoom-hint">Click to Enlarge &nearr;</div>
+            </div>
+
+            <div class="slide-spec-card">
+              <div class="spec-eyebrow-row">
+                <span class="spec-tag">${item.tag || `PIECE ${String(idx + 1).padStart(2, '0')}`}</span>
+                <span class="spec-category">${item.category}</span>
+              </div>
+
+              <h2 class="spec-title">${item.title}</h2>
+              <p class="spec-desc">${item.description}</p>
+
+              <div class="spec-meta-grid">
+                <div>
+                  <div class="meta-field-label">Primary Materials</div>
+                  <div class="meta-field-val">${item.materials}</div>
+                </div>
+                <div>
+                  <div class="meta-field-label">Dimensions</div>
+                  <div class="meta-field-val">${item.dimensions}</div>
+                </div>
+                <div>
+                  <div class="meta-field-label">Delivery / Lead Time</div>
+                  <div class="meta-field-val">${item.leadTime || 'Consult Studio'}</div>
+                </div>
+                <div>
+                  <div class="meta-field-label">Pricing Guide</div>
+                  <div class="meta-field-val">${item.priceGuide || 'Price on Application'}</div>
+                </div>
+              </div>
+
+              <div class="spec-actions">
+                <button type="button" class="btn btn-primary inq-trigger-btn" data-id="${item.id}">Inquire About Piece</button>
+                <button type="button" class="btn btn-outline zoom-trigger-btn" data-img="${item.image}">Inspect Details &nearr;</button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+
+        // Thumbnails
+        thumbnailsStrip.innerHTML = items.map((item, idx) => `
+          <div class="thumb-item ${idx === currentIndex ? 'active' : ''}" data-index="${idx}" role="button" aria-label="Go to ${item.title}">
+            <img src="${item.image}" alt="${item.title}">
+          </div>
+        `).join('');
+
+        // Grid cards
+        catalogCardsGrid.innerHTML = items.map((item, idx) => `
+          <div class="catalog-card" data-index="${idx}">
+            <div class="catalog-card-img">
+              <img src="${item.image}" alt="${item.title}">
+            </div>
+            <div class="catalog-card-body">
+              <div class="catalog-card-tag">${item.category}</div>
+              <h3 class="catalog-card-title">${item.title}</h3>
+              <p class="catalog-card-mat">${item.materials}</p>
+              <div class="catalog-card-footer">
+                <span class="catalog-card-status">${item.status}</span>
+                <span style="color:var(--color-walnut);font-weight:600;">View in Stage &rarr;</span>
+              </div>
+            </div>
+          </div>
+        `).join('');
+
+        updateSlideState();
+      }
+
+      function updateSlideState() {
+        const slides = document.querySelectorAll('.carousel-slide');
+        const thumbs = document.querySelectorAll('.thumb-item');
+
+        slides.forEach((s, idx) => {
+          s.classList.toggle('active', idx === currentIndex);
+          s.classList.toggle('prev-slide', idx < currentIndex);
+        });
+
+        thumbs.forEach((t, idx) => {
+          t.classList.toggle('active', idx === currentIndex);
+        });
+
+        currentSlideNum.textContent = String(currentIndex + 1).padStart(2, '0');
+        const pct = ((currentIndex + 1) / items.length) * 100;
+        progressBar.style.width = pct + '%';
+      }
+
+      function goToSlide(index) {
+        if (index < 0) index = items.length - 1;
+        if (index >= items.length) index = 0;
+        currentIndex = index;
+        updateSlideState();
+      }
+
+      function nextSlide() {
+        goToSlide(currentIndex + 1);
+      }
+
+      function prevSlide() {
+        goToSlide(currentIndex - 1);
+      }
+
+      // Autoplay management (Respects prefers-reduced-motion)
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) {
+        isAutoplay = false;
+        autoplayBtn.classList.remove('playing');
+        autoplayLabel.textContent = 'Autoplay Off';
+      }
+
+      function startAutoplay() {
+        if (!isAutoplay || prefersReducedMotion) return;
+        stopAutoplay();
+        autoplayTimer = setInterval(() => {
+          nextSlide();
+        }, 5500);
+      }
+
+      function stopAutoplay() {
+        if (autoplayTimer) clearInterval(autoplayTimer);
+      }
+
+      function toggleAutoplay() {
+        isAutoplay = !isAutoplay;
+        autoplayBtn.classList.toggle('playing', isAutoplay);
+        autoplayBtn.setAttribute('aria-pressed', isAutoplay);
+        autoplayLabel.textContent = isAutoplay ? 'Autoplay On' : 'Autoplay Off';
+        if (isAutoplay) {
+          startAutoplay();
+        } else {
+          stopAutoplay();
+        }
+      }
+
+      // Event Listeners
+      nextBtn.addEventListener('click', () => {
+        nextSlide();
+        if (isAutoplay) startAutoplay(); // Reset interval
+      });
+
+      prevBtn.addEventListener('click', () => {
+        prevSlide();
+        if (isAutoplay) startAutoplay();
+      });
+
+      autoplayBtn.addEventListener('click', toggleAutoplay);
+
+      // Thumbnail clicks
+      thumbnailsStrip.addEventListener('click', (e) => {
+        const thumb = e.target.closest('.thumb-item');
+        if (thumb) {
+          goToSlide(parseInt(thumb.dataset.index, 10));
+          if (isAutoplay) startAutoplay();
+        }
+      });
+
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if (gridModal.classList.contains('open') || inquiryModal.classList.contains('open') || lightboxModal.classList.contains('open')) {
+          if (e.key === 'Escape') {
+            gridModal.classList.remove('open');
+            inquiryModal.classList.remove('open');
+            lightboxModal.classList.remove('open');
+          }
+          return;
+        }
+
+        if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+          nextSlide();
+          if (isAutoplay) startAutoplay();
+        } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+          prevSlide();
+          if (isAutoplay) startAutoplay();
+        } else if (e.key === ' ' && e.target === document.body) {
+          e.preventDefault();
+          toggleAutoplay();
+        }
+      });
+
+      // Pause autoplay when hovering over stage
+      const stage = document.querySelector('.carousel-stage');
+      stage.addEventListener('mouseenter', () => { if (isAutoplay) stopAutoplay(); });
+      stage.addEventListener('mouseleave', () => { if (isAutoplay) startAutoplay(); });
+
+      // Touch swipe support
+      let touchStartX = 0;
+      let touchEndX = 0;
+      stage.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      stage.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchStartX - touchEndX;
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) nextSlide();
+          else prevSlide();
+        }
+      }, { passive: true });
+
+      /* -------------------------------------------------------------
+         Grid Index Modal
+         ------------------------------------------------------------- */
+      toggleGridBtn.addEventListener('click', () => {
+        gridModal.classList.add('open');
+        gridModal.setAttribute('aria-hidden', 'false');
+      });
+
+      closeGridBtn.addEventListener('click', () => {
+        gridModal.classList.remove('open');
+        gridModal.setAttribute('aria-hidden', 'true');
+      });
+
+      catalogCardsGrid.addEventListener('click', (e) => {
+        const card = e.target.closest('.catalog-card');
+        if (card) {
+          const idx = parseInt(card.dataset.index, 10);
+          goToSlide(idx);
+          gridModal.classList.remove('open');
+          gridModal.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      /* -------------------------------------------------------------
+         Direct Inquiry Modal
+         ------------------------------------------------------------- */
+      document.addEventListener('click', (e) => {
+        const inqBtn = e.target.closest('.inq-trigger-btn');
+        if (inqBtn) {
+          const pieceId = inqBtn.dataset.id;
+          const piece = items.find(i => i.id === pieceId) || items[currentIndex];
+          if (piece) {
+            inquiryPieceName.textContent = piece.title;
+            inquiryPieceMeta.textContent = `${piece.category} · ${piece.materials}`;
+            inquiryPieceThumb.src = piece.image;
+            inquiryPieceHidden.value = piece.title;
+            inquiryModal.classList.add('open');
+            inquiryModal.setAttribute('aria-hidden', 'false');
+          }
+        }
+
+        const zoomBtn = e.target.closest('.zoom-trigger-btn, .slide-visual-frame');
+        if (zoomBtn) {
+          const imgUrl = zoomBtn.dataset.img || zoomBtn.querySelector('img')?.src;
+          if (imgUrl) {
+            lightboxImg.src = imgUrl;
+            lightboxModal.classList.add('open');
+            lightboxModal.setAttribute('aria-hidden', 'false');
+          }
+        }
+      });
+
+      closeInquiryBtn.addEventListener('click', () => {
+        inquiryModal.classList.remove('open');
+        inquiryModal.setAttribute('aria-hidden', 'true');
+      });
+
+      closeLightboxBtn.addEventListener('click', () => {
+        lightboxModal.classList.remove('open');
+        lightboxModal.setAttribute('aria-hidden', 'true');
+      });
+
+      lightboxModal.addEventListener('click', (e) => {
+        if (e.target === lightboxModal) {
+          lightboxModal.classList.remove('open');
+          lightboxModal.setAttribute('aria-hidden', 'true');
+        }
+      });
+
+      pieceInquiryForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const submitBtn = pieceInquiryForm.querySelector('.form-submit-btn');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Transmitting to Studio...';
+        setTimeout(() => {
+          pieceInquiryForm.reset();
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Transmit Studio Inquiry';
+          inquiryFeedback.style.display = 'block';
+          setTimeout(() => {
+            inquiryFeedback.style.display = 'none';
+            inquiryModal.classList.remove('open');
+          }, 3500);
+        }, 800);
+      });
+
+      /* -------------------------------------------------------------
+         Live Sync with Store (Updates if Admin uploads/removes items)
+         ------------------------------------------------------------- */
+      FurnitureStore.subscribe((newItems) => {
+        items = newItems;
+        if (currentIndex >= items.length) currentIndex = 0;
+        renderCarousel();
+      });
+
+      /* -------------------------------------------------------------
+         Hidden Admin Entry Shortcut (Not visible to viewers)
+         Press Ctrl + Shift + A to open admin portal
+         ------------------------------------------------------------- */
+      document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+          e.preventDefault();
+          window.location.href = 'admin.html';
+        }
+      });
+
+      // Initial Render
+      renderCarousel();
+      startAutoplay();
+    });
+  </script>
+</body>
+</html>
