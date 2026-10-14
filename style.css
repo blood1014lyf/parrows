@@ -317,13 +317,13 @@ button, input, select, textarea {
 }
 
 .hero-tagline {
-  font-size: clamp(14px, 1.35vw, 18px);
-  letter-spacing: 0.18em;
+  font-size: clamp(20px, 2.2vw, 30px);
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #FFFFF0 !important;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85);
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.9);
   font-weight: 600;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .hero-desc {
@@ -332,7 +332,7 @@ button, input, select, textarea {
   color: #FAF8F5 !important;
   text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85);
   max-width: 640px;
-  margin-bottom: 38px;
+  margin-bottom: 0;
   font-weight: 500;
 }
 
@@ -340,6 +340,7 @@ button, input, select, textarea {
   display: flex;
   gap: 20px;
   align-items: center;
+  margin-top: 52px;
 }
 
 .btn {
@@ -885,45 +886,45 @@ textarea.form-control {
 .site-footer {
   background-color: var(--color-dark-deep);
   color: #FFFFFF;
-  padding: 80px 0 40px;
+  padding: 44px 0 24px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .footer-top {
   display: grid;
   grid-template-columns: 1.5fr 1fr 1fr;
-  gap: 60px;
-  margin-bottom: 60px;
+  gap: 36px;
+  margin-bottom: 28px;
 }
 
 .footer-brand .brand-logo {
-  height: 52px;
-  margin-bottom: 20px;
+  height: 38px;
+  margin-bottom: 12px;
 }
 
 .footer-tagline {
-  font-size: 12px;
-  letter-spacing: 0.18em;
+  font-size: 11px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--color-walnut);
-  margin-bottom: 14px;
-  font-weight: 500;
+  margin-bottom: 8px;
+  font-weight: 600;
 }
 
 .footer-desc {
-  font-size: 14px;
-  line-height: 1.65;
+  font-size: 13px;
+  line-height: 1.55;
   color: var(--text-muted-light);
-  max-width: 380px;
+  max-width: 360px;
 }
 
 .footer-col-title {
-  font-size: 11px;
+  font-size: 10.5px;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   color: #FFFFFF;
   font-weight: 600;
-  margin-bottom: 22px;
+  margin-bottom: 12px;
 }
 
 .footer-links {
@@ -931,11 +932,11 @@ textarea.form-control {
 }
 
 .footer-links li {
-  margin-bottom: 12px;
+  margin-bottom: 7px;
 }
 
 .footer-links a {
-  font-size: 13px;
+  font-size: 12.5px;
   color: var(--text-muted-light);
   transition: color 0.2s ease;
 }
@@ -948,19 +949,27 @@ textarea.form-control {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 40px;
+  padding-top: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   font-size: 11px;
   color: rgba(247, 247, 245, 0.45);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
 }
 
 .footer-legal-links {
   display: flex;
-  gap: 24px;
+  gap: 20px;
 }
 
-.footer-legal-links a:hover {
+.footer-legal-links a,
+.footer-legal-links button {
+  font-size: 11px;
+  color: rgba(247, 247, 245, 0.55);
+  transition: color 0.2s ease;
+}
+
+.footer-legal-links a:hover,
+.footer-legal-links button:hover {
   color: #FFFFFF;
 }
 
@@ -1042,20 +1051,22 @@ textarea.form-control {
   }
   .footer-top {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 24px;
+    margin-bottom: 22px;
   }
   .footer-bottom {
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     text-align: center;
+    padding-top: 16px;
   }
 }
 
 @media (max-width: 768px) {
   .hero-section {
     min-height: 100svh;
-    padding-top: 76px;
-    padding-bottom: 40px;
+    padding-top: 80px;
+    padding-bottom: 44px;
     align-items: center;
   }
   .hero-section::before {
@@ -1068,23 +1079,8 @@ textarea.form-control {
     );
   }
   .hero-content {
-    padding: 30px 0 20px;
+    padding: 24px 0 20px;
     max-width: 100%;
-  }
-  .hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    font-size: 11px;
-    letter-spacing: 0.22em;
-    font-weight: 600;
-    color: #FFFFF0 !important;
-    padding: 6px 14px;
-    background: rgba(16, 14, 12, 0.65);
-    border: 1px solid rgba(255, 255, 240, 0.28);
-    border-radius: 30px;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    margin-bottom: 20px;
   }
   .hero-title {
     font-size: clamp(42px, 11.5vw, 58px);
@@ -1101,12 +1097,13 @@ textarea.form-control {
     color: #FFFFF0 !important;
   }
   .hero-tagline {
-    font-size: clamp(14px, 3.6vw, 16px);
-    letter-spacing: 0.16em;
+    font-size: clamp(17px, 4.4vw, 22px);
+    letter-spacing: 0.12em;
+    line-height: 1.25;
     font-weight: 600;
     color: #FFFFF0 !important;
     text-shadow: 0 2px 14px rgba(0, 0, 0, 0.9);
-    margin-bottom: 16px;
+    margin-bottom: 18px;
   }
   .hero-desc {
     font-size: clamp(15.5px, 3.8vw, 17.5px);
@@ -1114,13 +1111,14 @@ textarea.form-control {
     font-weight: 500;
     color: #FAF8F5 !important;
     text-shadow: 0 2px 14px rgba(0, 0, 0, 0.85);
-    margin-bottom: 30px;
+    margin-bottom: 0;
   }
   .hero-actions {
     flex-direction: column;
     align-items: stretch;
-    gap: 12px;
+    gap: 14px;
     width: 100%;
+    margin-top: 40px;
   }
   .hero-actions .btn {
     width: 100%;

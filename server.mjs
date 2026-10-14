@@ -37,6 +37,11 @@ const server = http.createServer((req, res) => {
     const end = parts[1] ? parseInt(parts[1], 10) : stat.size - 1;
     const chunksize = (end - start) + 1;
     const stream = fs.createReadStream(filePath, { start, end });
+    stream.on('error', () => {
+      if (!res.headersSent) res.writeHead(500);
+      res.end();
+    });
+    res.on('error', () => {});
     res.writeHead(206, {
       'Content-Range': `bytes ${start}-${end}/${stat.size}`,
       'Accept-Ranges': 'bytes',
@@ -50,8 +55,22 @@ const server = http.createServer((req, res) => {
       'Content-Type': contentType,
       'Access-Control-Allow-Origin': '*'
     });
-    fs.createReadStream(filePath).pipe(res);
+    const stream = fs.createReadStream(filePath);
+    stream.on('error', () => {
+      if (!res.headersSent) res.writeHead(500);
+      res.end();
+    });
+    res.on('error', () => {});
+    stream.pipe(res);
   }
+});
+
+server.on('error', (err) => {
+  console.error('Server error:', err);
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught exception:', err);
 });
 
 server.listen(8088, () => {
