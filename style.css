@@ -69,6 +69,17 @@ button, input, select, textarea {
   font-family: inherit;
 }
 
+/* Maintain identical font style throughout & guarantee consistent sentence colors */
+em, i {
+  font-style: normal;
+  color: inherit;
+}
+
+strong, b {
+  color: inherit;
+  font-weight: 600;
+}
+
 .container {
   width: 100%;
   max-width: 1280px;
@@ -310,10 +321,10 @@ button, input, select, textarea {
 }
 
 .hero-title em {
-  font-style: italic;
-  color: #FFFFF0 !important;
-  font-weight: 600;
-  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.8), 0 1px 3px rgba(0, 0, 0, 0.95);
+  font-style: normal;
+  color: inherit !important;
+  font-weight: inherit;
+  text-shadow: inherit;
 }
 
 .hero-tagline {
@@ -449,8 +460,9 @@ button, input, select, textarea {
 }
 
 .section-title em {
-  font-style: italic;
-  color: var(--color-walnut);
+  font-style: normal;
+  color: inherit;
+  font-weight: inherit;
 }
 
 .section-desc {
@@ -468,10 +480,9 @@ button, input, select, textarea {
 }
 
 .studio-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 8vw;
-  align-items: center;
+  display: block;
+  max-width: 860px;
+  margin: 0 auto;
 }
 
 .studio-narrative p {
@@ -485,7 +496,8 @@ button, input, select, textarea {
 .studio-narrative p.lead {
   font-size: 22px;
   line-height: 1.6;
-  font-family: var(--font-serif);
+  font-family: inherit;
+  font-style: normal;
   color: var(--color-dark);
 }
 
@@ -623,11 +635,12 @@ button, input, select, textarea {
 }
 
 .experience-lead-wrap p {
-  color: rgba(247, 247, 245, 0.82);
+  color: #FFFFF0;
 }
 
 .experience-lead-wrap strong {
-  color: #FFFFF0;
+  color: inherit;
+  font-weight: 600;
 }
 
 .experience-grid {
@@ -1194,9 +1207,9 @@ textarea.form-control {
     margin-bottom: 18px;
   }
   .hero-title em {
-    font-style: italic;
-    font-weight: 600;
-    color: #FFFFF0 !important;
+    font-style: normal;
+    font-weight: inherit;
+    color: inherit !important;
   }
   .hero-tagline {
     font-size: clamp(17px, 4.4vw, 22px);
