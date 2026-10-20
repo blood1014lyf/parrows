@@ -16,10 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const mobileDrawer = document.getElementById('mobileDrawer');
   const mobileLinks = document.querySelectorAll('.mobile-link');
   const heroVideo = document.getElementById('heroVideo');
-  const videoToggle = document.getElementById('videoToggle');
-  const videoIconPause = document.getElementById('videoIconPause');
-  const videoIconPlay = document.getElementById('videoIconPlay');
-  const videoToggleText = document.getElementById('videoToggleText');
   const cookieBanner = document.getElementById('cookieBanner');
   const cookieAcceptAll = document.getElementById('cookieAcceptAll');
   const cookieAcceptEssential = document.getElementById('cookieAcceptEssential');
@@ -67,31 +63,77 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 3. Ambient Hero Video Autoplay Assurance
+  // 3. Hero Video Autoplay with Sound & Seamless Looping
   if (heroVideo) {
-    heroVideo.muted = true;
     heroVideo.setAttribute('playsinline', '');
     heroVideo.setAttribute('autoplay', '');
     heroVideo.setAttribute('loop', '');
+    heroVideo.volume = 1.0;
 
-    const tryPlay = () => {
+    const soundToggle = document.getElementById('soundToggle');
+    const soundToggleText = document.getElementById('soundToggleText');
+    const soundIconOn = document.querySelector('.sound-icon-on');
+    const soundIconOff = document.querySelector('.sound-icon-off');
+
+    const updateSoundUI = (isMuted) => {
+      if (soundToggleText) {
+        soundToggleText.textContent = isMuted ? 'Sound Off' : 'Sound On';
+      }
+      if (soundIconOn && soundIconOff) {
+        soundIconOn.style.display = isMuted ? 'none' : 'block';
+        soundIconOff.style.display = isMuted ? 'block' : 'none';
+      }
+    };
+
+    // Attempt direct unmuted playback first
+    heroVideo.muted = false;
+    updateSoundUI(false);
+
+    const startPlayback = () => {
       const p = heroVideo.play();
       if (p !== undefined) {
-        p.catch(() => {
-          const resume = () => {
+        p.then(() => {
+          updateSoundUI(heroVideo.muted);
+        }).catch(() => {
+          // If browser autoplay policy prevents unmuted initial playback, start muted and unmute immediately on user interaction
+          heroVideo.muted = true;
+          updateSoundUI(true);
+          heroVideo.play().catch(() => {});
+
+          const unmuteOnInteraction = () => {
+            heroVideo.muted = false;
+            heroVideo.volume = 1.0;
             heroVideo.play().catch(() => {});
-            ['touchstart', 'click', 'scroll', 'keydown'].forEach(evt => {
-              window.removeEventListener(evt, resume);
+            updateSoundUI(false);
+            ['touchstart', 'click', 'scroll', 'keydown', 'pointerdown'].forEach(evt => {
+              window.removeEventListener(evt, unmuteOnInteraction);
             });
           };
-          ['touchstart', 'click', 'scroll', 'keydown'].forEach(evt => {
-            window.addEventListener(evt, resume, { passive: true });
+
+          ['touchstart', 'click', 'scroll', 'keydown', 'pointerdown'].forEach(evt => {
+            window.addEventListener(evt, unmuteOnInteraction, { passive: true });
           });
         });
       }
     };
 
-    tryPlay();
+    startPlayback();
+
+    // Sound toggle control (toggles audio, never stops or pauses the video)
+    if (soundToggle) {
+      soundToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        heroVideo.muted = !heroVideo.muted;
+        if (!heroVideo.muted) {
+          heroVideo.volume = 1.0;
+        }
+        updateSoundUI(heroVideo.muted);
+        if (heroVideo.paused) {
+          heroVideo.play().catch(() => {});
+        }
+      });
+    }
+
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden && heroVideo.paused) {
         heroVideo.play().catch(() => {});

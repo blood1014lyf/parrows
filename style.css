@@ -354,6 +354,44 @@ strong, b {
   margin-top: 52px;
 }
 
+/* Ambient Audio Sound Toggle */
+.hero-sound-toggle {
+  position: absolute;
+  bottom: 28px;
+  right: 5vw;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: rgba(24, 24, 24, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 240, 0.32);
+  border-radius: 30px;
+  color: #FFFFF0;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+}
+
+.hero-sound-toggle:hover {
+  background: rgba(24, 24, 24, 0.92);
+  border-color: rgba(255, 255, 240, 0.65);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.45);
+}
+
+.hero-sound-toggle svg {
+  flex-shrink: 0;
+  stroke: #FFFFF0;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -1243,6 +1281,12 @@ textarea.form-control {
     letter-spacing: 0.18em;
     font-weight: 600;
   }
+  .hero-sound-toggle {
+    bottom: 16px;
+    right: 20px;
+    padding: 6px 14px;
+    font-size: 10px;
+  }
   .portfolio-item:nth-child(1),
   .portfolio-item:nth-child(2),
   .portfolio-item:nth-child(3),
@@ -1600,7 +1644,7 @@ textarea.form-control {
     display: none !important;
   }
   .hero-section {
-    background-image: url('assets/hero-video/hero-16733501-poster.jpg') !important;
+    background-image: url('assets/hero-video/hero-showcase-poster.jpg') !important;
     background-size: cover !important;
     background-position: center !important;
   }
