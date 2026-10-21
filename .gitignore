@@ -15,6 +15,7 @@ git_push_output.txt
 # Large unused raw encode intermediates
 assets/hero-video/*-4k.mp4
 !assets/hero-video/hero-showcase-4k.mp4
+!assets/hero-video/hero-penthouse-4k.mp4
 assets/hero-video/*-opt.mp4
 
 # Temporary test data & screenshots
