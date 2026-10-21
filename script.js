@@ -30,6 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.classList.remove('pl-active');
       document.body.classList.add('pl-done');
       preloader.style.display = 'none';
+      const heroSection = document.querySelector('.hero-section');
+      if (heroSection) heroSection.classList.add('hero-revealed');
     } else {
       document.body.classList.add('pl-active');
       window.scrollTo(0, 0);
@@ -87,6 +89,15 @@ document.addEventListener('DOMContentLoaded', () => {
           setTimeout(() => {
             preloader.classList.add('lift');
 
+            // Trigger smooth hero text & actions reveal
+            const heroSection = document.querySelector('.hero-section');
+            if (heroSection) {
+              heroSection.classList.add('hero-revealed');
+            }
+            if (heroVideo && heroVideo.paused) {
+              heroVideo.play().catch(() => {});
+            }
+
             setTimeout(() => {
               document.body.classList.remove('pl-active');
               document.body.classList.add('pl-done');
@@ -120,7 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
           heroVideo.addEventListener('canplay', onCanPlay);
           heroVideo.addEventListener('loadeddata', onCanPlay);
           heroVideo.addEventListener('error', onCanPlay);
-          try { heroVideo.load(); } catch (e) { resolve(); }
         }
       }));
 
@@ -148,6 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         if (!revealed) {
           targetProgress = 1;
+          const heroSection = document.querySelector('.hero-section');
+          if (heroSection) heroSection.classList.add('hero-revealed');
         }
       }, 3500);
     }
@@ -193,23 +205,51 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 3. Hero Video Seamless Loop (Autoplay, loop, no buttons)
+  // 3. Hero Video Seamless Autoplay & Infinite Loop
   if (heroVideo) {
     heroVideo.setAttribute('playsinline', '');
+    heroVideo.setAttribute('webkit-playsinline', '');
     heroVideo.setAttribute('autoplay', '');
     heroVideo.setAttribute('loop', '');
     heroVideo.muted = true;
+    heroVideo.defaultMuted = true;
 
     const playVideo = () => {
-      heroVideo.play().catch(() => {});
+      const p = heroVideo.play();
+      if (p !== undefined) {
+        p.catch(() => {
+          heroVideo.muted = true;
+          heroVideo.play().catch(() => {});
+        });
+      }
     };
 
     playVideo();
 
+    heroVideo.addEventListener('loadedmetadata', playVideo, { once: true });
+    heroVideo.addEventListener('canplay', playVideo, { once: true });
+
+    // Explicit infinite loop fallback
+    heroVideo.addEventListener('ended', () => {
+      heroVideo.currentTime = 0;
+      playVideo();
+    });
+
+    // Resume when tab regains focus
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden && heroVideo.paused) {
         playVideo();
       }
+    });
+
+    // Fallback on first user interaction in case browser policy delayed autoplay
+    const onFirstUserAction = () => {
+      if (heroVideo.paused) {
+        playVideo();
+      }
+    };
+    ['touchstart', 'pointerdown', 'scroll', 'click'].forEach(evt => {
+      window.addEventListener(evt, onFirstUserAction, { passive: true, once: true });
     });
   }
 

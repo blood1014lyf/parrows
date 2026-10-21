@@ -418,6 +418,12 @@ strong, b {
   margin: 0 auto;
   max-width: 14ch;
   text-align: center;
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 1.3s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1.3s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
 .hero-title em {
@@ -433,6 +439,36 @@ strong, b {
   align-items: center;
   justify-content: center;
   margin: 36px auto 0;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.28s,
+    transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.28s;
+  will-change: opacity, transform;
+}
+
+/* Revealed States — Smooth Silk Fade-In */
+.hero-revealed .hero-title,
+body.pl-done .hero-title,
+body:not(.pl-active) .hero-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-revealed .hero-actions,
+body.pl-done .hero-actions,
+body:not(.pl-active) .hero-actions {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-title,
+  .hero-actions {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 /* Hero Video Control Buttons Removed */
