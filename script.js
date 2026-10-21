@@ -89,11 +89,14 @@ document.addEventListener('DOMContentLoaded', () => {
           setTimeout(() => {
             preloader.classList.add('lift');
 
-            // Trigger smooth hero text & actions reveal
-            const heroSection = document.querySelector('.hero-section');
-            if (heroSection) {
-              heroSection.classList.add('hero-revealed');
+            // Trigger sleek hero typewriter effect as curtain lifts
+            if (typeof startTypewriter === 'function') {
+              startTypewriter();
+            } else {
+              const heroActions = document.querySelector('.hero-actions');
+              if (heroActions) heroActions.classList.add('revealed');
             }
+
             if (heroVideo && heroVideo.paused) {
               heroVideo.play().catch(() => {});
             }
@@ -205,7 +208,110 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 3. Hero Video Seamless Autoplay & Infinite Loop
+  // 3a. Sleek Hero Headline Typewriter Effect
+  const heroTitle = document.getElementById('heroTitle');
+  const typeOutput = heroTitle ? heroTitle.querySelector('.typewriter-output') : null;
+  const typeCursor = heroTitle ? heroTitle.querySelector('.typewriter-cursor') : null;
+  const fullHeroText = heroTitle ? (heroTitle.dataset.typewriterText || heroTitle.textContent.trim()) : 'Spaces that carry your signature.';
+  let typewriterStarted = false;
+
+  function startTypewriter() {
+    if (typewriterStarted || !typeOutput) return;
+    typewriterStarted = true;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      typeOutput.textContent = fullHeroText;
+      if (typeCursor) typeCursor.classList.add('finished');
+      const heroActions = document.querySelector('.hero-actions');
+      if (heroActions) heroActions.classList.add('revealed');
+      return;
+    }
+
+    typeOutput.textContent = '';
+    let charIndex = 0;
+    // 33 characters * 21ms = ~690ms (fast, sleek, under 0.8 seconds)
+    const typingInterval = 21;
+
+    const typeNextChar = () => {
+      if (charIndex < fullHeroText.length) {
+        typeOutput.textContent += fullHeroText.charAt(charIndex);
+        charIndex++;
+        setTimeout(typeNextChar, typingInterval);
+      } else {
+        setTimeout(() => {
+          if (typeCursor) typeCursor.classList.add('finished');
+        }, 180);
+        const heroActions = document.querySelector('.hero-actions');
+        if (heroActions) heroActions.classList.add('revealed');
+      }
+    };
+
+    typeNextChar();
+  }
+
+  // Scroll-trigger via IntersectionObserver for Hero Headline
+  if (heroTitle) {
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && typeOutput) {
+      typeOutput.textContent = '';
+    }
+
+    const heroObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (!document.body.classList.contains('pl-active')) {
+            startTypewriter();
+            obs.unobserve(entry.target);
+          }
+        }
+      });
+    }, {
+      threshold: 0.15
+    });
+
+    heroObserver.observe(heroTitle);
+  }
+
+  // 3b. Scroll-Triggered Staggered Word Fade-In for Feature Section Headers
+  function initStaggerHeaders() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
+    const headers = document.querySelectorAll('.section-title, .pillar-title, .stagger-header');
+
+    headers.forEach(header => {
+      if (header.classList.contains('stagger-header')) return;
+      header.classList.add('stagger-header');
+
+      const text = header.textContent.trim();
+      const words = text.split(/\s+/);
+      header.innerHTML = words.map((word, i) => {
+        return `<span class="stagger-word" style="--w-idx: ${i}">${word}</span>`;
+      }).join(' ');
+
+      header.classList.add('js-ready');
+    });
+
+    const headerObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in-view');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    headers.forEach(header => {
+      headerObserver.observe(header);
+    });
+  }
+
+  initStaggerHeaders();
+
+  // 3c. Hero Video Seamless Autoplay & Infinite Loop
   if (heroVideo) {
     heroVideo.setAttribute('playsinline', '');
     heroVideo.setAttribute('webkit-playsinline', '');

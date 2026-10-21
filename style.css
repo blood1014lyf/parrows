@@ -407,6 +407,7 @@ strong, b {
   display: none;
 }
 
+/* Hero Headline — Sleek Typewriter Effect */
 .hero-title {
   font-family: var(--font-serif);
   font-size: clamp(48px, 6.4vw, 92px);
@@ -418,12 +419,8 @@ strong, b {
   margin: 0 auto;
   max-width: 14ch;
   text-align: center;
-  opacity: 0;
-  transform: translateY(24px);
-  transition:
-    opacity 1.3s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 1.3s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+  position: relative;
+  min-height: 2.2em;
 }
 
 .hero-title em {
@@ -433,6 +430,28 @@ strong, b {
   text-shadow: inherit;
 }
 
+.typewriter-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 0.82em;
+  background-color: #FFFFF0;
+  margin-left: 4px;
+  vertical-align: -0.04em;
+  animation: tw-blink 0.65s infinite ease-in-out;
+  box-shadow: 0 0 12px rgba(255, 255, 240, 0.7);
+  transition: opacity 0.35s ease;
+}
+
+.typewriter-cursor.finished {
+  opacity: 0;
+  animation: none;
+}
+
+@keyframes tw-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 .hero-actions {
   display: flex;
   gap: 18px;
@@ -440,31 +459,57 @@ strong, b {
   justify-content: center;
   margin: 36px auto 0;
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(18px);
   transition:
-    opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.28s,
-    transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.28s;
+    opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
-/* Revealed States — Smooth Silk Fade-In */
-.hero-revealed .hero-title,
-body.pl-done .hero-title,
-body:not(.pl-active) .hero-title {
-  opacity: 1;
-  transform: translateY(0);
-}
-
+.hero-actions.revealed,
 .hero-revealed .hero-actions,
 body.pl-done .hero-actions,
 body:not(.pl-active) .hero-actions {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-title,
+  .typewriter-cursor {
+    display: none !important;
+  }
   .hero-actions {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   SCROLL-TRIGGERED TEXT ANIMATIONS — STAGGERED WORD FADE-IN
+   ========================================================================== */
+.stagger-header {
+  position: relative;
+}
+
+.stagger-header.js-ready .stagger-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--w-idx, 0) * 0.04s);
+  will-change: opacity, transform;
+}
+
+.stagger-header.is-in-view .stagger-word {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stagger-header.js-ready .stagger-word {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
