@@ -125,7 +125,16 @@
   <!-- Core Stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
-<body id="top">
+<body id="top" class="pl-active">
+
+  <!-- Loam-Style Curtain Preloader with Parrow's Signature Logo -->
+  <div class="preloader" id="preloader" data-preloader aria-hidden="true">
+    <div class="pl-panels"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="pl-logo">
+      <img src="assets/logo-light.png" alt="Parrow’s Signature" style="height: 48px; width: auto;">
+      <div class="pl-pct" id="plPct" data-pl-pct>0</div>
+    </div>
+  </div>
 
   <!-- Accessible Skip to Content Link (WCAG 2.4.1 Bypass Blocks) -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -174,24 +183,10 @@
   <main id="main-content">
     <!-- Hero Section (Video Hero) -->
     <section class="hero-section" aria-label="Welcome to Parrow's Signature">
-      <video class="hero-video-bg" id="heroVideo" autoplay loop playsinline preload="auto" poster="assets/hero-video/hero-penthouse-poster.jpg">
+      <video class="hero-video-bg" id="heroVideo" autoplay loop muted playsinline preload="auto" poster="assets/hero-video/hero-penthouse-poster.jpg">
         <source src="assets/hero-video/hero-penthouse-4k.mp4" type="video/mp4">
         <source src="assets/hero-video/hero-penthouse-master.mp4" type="video/mp4">
       </video>
-
-      <!-- Ambient Audio Sound Toggle (Controls sound, does not stop or pause the video) -->
-      <button type="button" class="hero-sound-toggle" id="soundToggle" aria-label="Toggle hero video sound" title="Toggle sound">
-        <svg class="sound-icon-on" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-        </svg>
-        <svg class="sound-icon-off" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none;">
-          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-          <line x1="23" y1="9" x2="17" y2="15"></line>
-          <line x1="17" y1="9" x2="23" y2="15"></line>
-        </svg>
-        <span id="soundToggleText">Sound On</span>
-      </button>
 
       <div class="container">
         <div class="hero-content">

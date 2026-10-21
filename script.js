@@ -23,6 +23,136 @@ document.addEventListener('DOMContentLoaded', () => {
   const contactForm = document.getElementById('contactForm');
   const formFeedback = document.getElementById('formFeedback');
 
+  // 0. Loam-Style Curtain Preloader with Parrow's Signature Logo
+  const preloader = document.getElementById('preloader');
+  if (preloader) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.body.classList.remove('pl-active');
+      document.body.classList.add('pl-done');
+      preloader.style.display = 'none';
+    } else {
+      document.body.classList.add('pl-active');
+      window.scrollTo(0, 0);
+
+      const logoImg = preloader.querySelector('.pl-logo img');
+      const pctEl = document.getElementById('plPct');
+      const MAX_BLUR = 20;
+      let progress = 0;
+      let targetProgress = 0.18;
+      let revealed = false;
+      const startTime = performance.now();
+
+      const updateUI = (val) => {
+        if (logoImg) {
+          const blurVal = ((1 - val) * MAX_BLUR).toFixed(1);
+          logoImg.style.filter = `blur(${blurVal}px)`;
+        }
+        if (pctEl) {
+          pctEl.textContent = Math.round(val * 100);
+        }
+      };
+
+      const animateProgress = () => {
+        if (revealed) return;
+        progress += (targetProgress - progress) * 0.12;
+        if (Math.abs(targetProgress - progress) < 0.005) {
+          progress = targetProgress;
+        }
+        updateUI(progress);
+
+        if (progress >= 0.99 && targetProgress >= 1) {
+          doReveal();
+        } else {
+          requestAnimationFrame(animateProgress);
+        }
+      };
+      requestAnimationFrame(animateProgress);
+
+      const doReveal = () => {
+        if (revealed) return;
+        revealed = true;
+        updateUI(1);
+
+        const elapsed = performance.now() - startTime;
+        const holdDelay = Math.max(100, 500 - elapsed) + 250;
+
+        setTimeout(() => {
+          const logoWrap = preloader.querySelector('.pl-logo');
+          if (logoWrap) {
+            logoWrap.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+            logoWrap.style.opacity = '0';
+            logoWrap.style.transform = 'scale(0.96)';
+          }
+
+          setTimeout(() => {
+            preloader.classList.add('lift');
+
+            setTimeout(() => {
+              document.body.classList.remove('pl-active');
+              document.body.classList.add('pl-done');
+              preloader.style.display = 'none';
+            }, 900);
+          }, 200);
+        }, holdDelay);
+      };
+
+      // Real loading tasks
+      const tasks = [];
+
+      // Task 1: Fonts
+      if (document.fonts && document.fonts.ready) {
+        tasks.push(document.fonts.ready);
+      } else {
+        tasks.push(Promise.resolve());
+      }
+
+      // Task 2: Hero Video ready
+      tasks.push(new Promise((resolve) => {
+        if (!heroVideo || heroVideo.readyState >= 2) {
+          resolve();
+        } else {
+          const onCanPlay = () => {
+            heroVideo.removeEventListener('canplay', onCanPlay);
+            heroVideo.removeEventListener('loadeddata', onCanPlay);
+            heroVideo.removeEventListener('error', onCanPlay);
+            resolve();
+          };
+          heroVideo.addEventListener('canplay', onCanPlay);
+          heroVideo.addEventListener('loadeddata', onCanPlay);
+          heroVideo.addEventListener('error', onCanPlay);
+          try { heroVideo.load(); } catch (e) { resolve(); }
+        }
+      }));
+
+      // Task 3: Window Load
+      tasks.push(new Promise((resolve) => {
+        if (document.readyState === 'complete') {
+          resolve();
+        } else {
+          window.addEventListener('load', resolve, { once: true });
+        }
+      }));
+
+      let completedTasks = 0;
+      tasks.forEach((taskPromise) => {
+        taskPromise.then(() => {
+          completedTasks++;
+          targetProgress = Math.min(1, 0.2 + (completedTasks / tasks.length) * 0.8);
+        }).catch(() => {
+          completedTasks++;
+          targetProgress = Math.min(1, 0.2 + (completedTasks / tasks.length) * 0.8);
+        });
+      });
+
+      // Safety failsafe: never trap visitor
+      setTimeout(() => {
+        if (!revealed) {
+          targetProgress = 1;
+        }
+      }, 3500);
+    }
+  }
+
   // 1. Header scroll listener
   const updateHeader = () => {
     if (window.scrollY > 40) {
@@ -63,80 +193,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 3. Hero Video Autoplay with Sound & Seamless Looping
+  // 3. Hero Video Seamless Loop (Autoplay, loop, no buttons)
   if (heroVideo) {
     heroVideo.setAttribute('playsinline', '');
     heroVideo.setAttribute('autoplay', '');
     heroVideo.setAttribute('loop', '');
-    heroVideo.volume = 1.0;
+    heroVideo.muted = true;
 
-    const soundToggle = document.getElementById('soundToggle');
-    const soundToggleText = document.getElementById('soundToggleText');
-    const soundIconOn = document.querySelector('.sound-icon-on');
-    const soundIconOff = document.querySelector('.sound-icon-off');
-
-    const updateSoundUI = (isMuted) => {
-      if (soundToggleText) {
-        soundToggleText.textContent = isMuted ? 'Sound Off' : 'Sound On';
-      }
-      if (soundIconOn && soundIconOff) {
-        soundIconOn.style.display = isMuted ? 'none' : 'block';
-        soundIconOff.style.display = isMuted ? 'block' : 'none';
-      }
+    const playVideo = () => {
+      heroVideo.play().catch(() => {});
     };
 
-    // Attempt direct unmuted playback first
-    heroVideo.muted = false;
-    updateSoundUI(false);
-
-    const startPlayback = () => {
-      const p = heroVideo.play();
-      if (p !== undefined) {
-        p.then(() => {
-          updateSoundUI(heroVideo.muted);
-        }).catch(() => {
-          // If browser autoplay policy prevents unmuted initial playback, start muted and unmute immediately on user interaction
-          heroVideo.muted = true;
-          updateSoundUI(true);
-          heroVideo.play().catch(() => {});
-
-          const unmuteOnInteraction = () => {
-            heroVideo.muted = false;
-            heroVideo.volume = 1.0;
-            heroVideo.play().catch(() => {});
-            updateSoundUI(false);
-            ['touchstart', 'click', 'scroll', 'keydown', 'pointerdown'].forEach(evt => {
-              window.removeEventListener(evt, unmuteOnInteraction);
-            });
-          };
-
-          ['touchstart', 'click', 'scroll', 'keydown', 'pointerdown'].forEach(evt => {
-            window.addEventListener(evt, unmuteOnInteraction, { passive: true });
-          });
-        });
-      }
-    };
-
-    startPlayback();
-
-    // Sound toggle control (toggles audio, never stops or pauses the video)
-    if (soundToggle) {
-      soundToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        heroVideo.muted = !heroVideo.muted;
-        if (!heroVideo.muted) {
-          heroVideo.volume = 1.0;
-        }
-        updateSoundUI(heroVideo.muted);
-        if (heroVideo.paused) {
-          heroVideo.play().catch(() => {});
-        }
-      });
-    }
+    playVideo();
 
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden && heroVideo.paused) {
-        heroVideo.play().catch(() => {});
+        playVideo();
       }
     });
   }
