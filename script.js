@@ -26,23 +26,33 @@ document.addEventListener('DOMContentLoaded', () => {
   // 0. Loam-Style Curtain Preloader with Parrow's Signature Logo
   const preloader = document.getElementById('preloader');
   if (preloader) {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hasPreloaded = sessionStorage.getItem('ps_preloaded');
+
+    if (isReducedMotion || hasPreloaded) {
       document.body.classList.remove('pl-active');
       document.body.classList.add('pl-done');
       preloader.style.display = 'none';
       const heroSection = document.querySelector('.hero-section');
       if (heroSection) heroSection.classList.add('hero-revealed');
+      setTimeout(() => {
+        if (typeof startTypewriter === 'function') {
+          startTypewriter();
+        }
+      }, 100);
+      if (heroVideo && heroVideo.paused) {
+        heroVideo.play().catch(() => {});
+      }
     } else {
       document.body.classList.add('pl-active');
       window.scrollTo(0, 0);
 
       const logoImg = preloader.querySelector('.pl-logo img');
       const pctEl = document.getElementById('plPct');
-      const MAX_BLUR = 20;
+      const MAX_BLUR = 18;
       let progress = 0;
-      let targetProgress = 0.18;
+      let targetProgress = 0.22;
       let revealed = false;
-      const startTime = performance.now();
 
       const updateUI = (val) => {
         if (logoImg) {
@@ -56,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const animateProgress = () => {
         if (revealed) return;
-        progress += (targetProgress - progress) * 0.12;
+        progress += (targetProgress - progress) * 0.15;
         if (Math.abs(targetProgress - progress) < 0.005) {
           progress = targetProgress;
         }
@@ -73,15 +83,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const doReveal = () => {
         if (revealed) return;
         revealed = true;
+        try {
+          sessionStorage.setItem('ps_preloaded', 'true');
+        } catch (e) {}
         updateUI(1);
-
-        const elapsed = performance.now() - startTime;
-        const holdDelay = Math.max(100, 500 - elapsed) + 250;
 
         setTimeout(() => {
           const logoWrap = preloader.querySelector('.pl-logo');
           if (logoWrap) {
-            logoWrap.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+            logoWrap.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
             logoWrap.style.opacity = '0';
             logoWrap.style.transform = 'scale(0.96)';
           }
@@ -105,66 +115,38 @@ document.addEventListener('DOMContentLoaded', () => {
               document.body.classList.remove('pl-active');
               document.body.classList.add('pl-done');
               preloader.style.display = 'none';
-            }, 900);
-          }, 200);
-        }, holdDelay);
+            }, 800);
+          }, 160);
+        }, 150);
       };
 
-      // Real loading tasks
-      const tasks = [];
+      // Fast, synthetic/asset progress ramp that guarantees completion in 700-800ms
+      const scheduleRamp = (ms, target) => {
+        setTimeout(() => {
+          if (!revealed) {
+            targetProgress = Math.max(targetProgress, target);
+          }
+        }, ms);
+      };
 
-      // Task 1: Fonts
+      scheduleRamp(80, 0.42);
+      scheduleRamp(240, 0.68);
+      scheduleRamp(450, 0.88);
+      scheduleRamp(680, 1.0);
+
       if (document.fonts && document.fonts.ready) {
-        tasks.push(document.fonts.ready);
-      } else {
-        tasks.push(Promise.resolve());
+        document.fonts.ready.then(() => {
+          if (!revealed) targetProgress = Math.max(targetProgress, 0.6);
+        }).catch(() => {});
       }
 
-      // Task 2: Hero Video ready
-      tasks.push(new Promise((resolve) => {
-        if (!heroVideo || heroVideo.readyState >= 2) {
-          resolve();
-        } else {
-          const onCanPlay = () => {
-            heroVideo.removeEventListener('canplay', onCanPlay);
-            heroVideo.removeEventListener('loadeddata', onCanPlay);
-            heroVideo.removeEventListener('error', onCanPlay);
-            resolve();
-          };
-          heroVideo.addEventListener('canplay', onCanPlay);
-          heroVideo.addEventListener('loadeddata', onCanPlay);
-          heroVideo.addEventListener('error', onCanPlay);
-        }
-      }));
-
-      // Task 3: Window Load
-      tasks.push(new Promise((resolve) => {
-        if (document.readyState === 'complete') {
-          resolve();
-        } else {
-          window.addEventListener('load', resolve, { once: true });
-        }
-      }));
-
-      let completedTasks = 0;
-      tasks.forEach((taskPromise) => {
-        taskPromise.then(() => {
-          completedTasks++;
-          targetProgress = Math.min(1, 0.2 + (completedTasks / tasks.length) * 0.8);
-        }).catch(() => {
-          completedTasks++;
-          targetProgress = Math.min(1, 0.2 + (completedTasks / tasks.length) * 0.8);
-        });
-      });
-
-      // Safety failsafe: never trap visitor
+      // Absolute safety failsafe: after 1.2s max, ALWAYS lift curtain
       setTimeout(() => {
         if (!revealed) {
           targetProgress = 1;
-          const heroSection = document.querySelector('.hero-section');
-          if (heroSection) heroSection.classList.add('hero-revealed');
+          doReveal();
         }
-      }, 3500);
+      }, 1200);
     }
   }
 

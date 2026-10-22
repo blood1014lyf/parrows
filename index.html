@@ -125,7 +125,7 @@
   <!-- Core Stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
-<body id="top" class="pl-active">
+<body id="top">
 
   <!-- Loam-Style Curtain Preloader with Parrow's Signature Logo -->
   <div class="preloader" id="preloader" data-preloader aria-hidden="true">
@@ -188,7 +188,7 @@
         <source src="assets/hero-video/hero-penthouse-master.mp4" type="video/mp4">
       </video>
 
-      <div class="container">
+      <div class="container hero-container">
         <div class="hero-content">
           <h1 class="hero-title" id="heroTitle" data-typewriter-text="Spaces that carry your signature."><span class="typewriter-output">Spaces that carry your signature.</span><span class="typewriter-cursor" aria-hidden="true"></span></h1>
           <div class="hero-actions">
@@ -312,16 +312,16 @@
     <!-- Our Experience Section -->
     <section class="experience-section section-pad" id="experience" aria-labelledby="experience-heading">
       <div class="container">
-        <div class="section-header" style="max-width:860px; margin-bottom:32px;">
-          <span class="section-eyebrow" style="color:var(--color-walnut);">Our Experience</span>
-          <h2 class="section-title" id="experience-heading" style="color:#FFFFF0;">Proven institutional pedigree, professional accountability, and rigorous delivery.</h2>
+        <div class="section-header experience-header">
+          <span class="section-eyebrow">Our Experience</span>
+          <h2 class="section-title" id="experience-heading">Proven institutional pedigree, professional accountability, and rigorous delivery.</h2>
         </div>
 
-        <div class="experience-lead-wrap" style="max-width:820px; font-size:17px; line-height:1.75; color:#FFFFF0;">
-          <p style="margin-bottom:16px;">
+        <div class="experience-lead-wrap">
+          <p>
             <strong>Parrow’s Signature</strong> benefits from the broader business experience of its parent company, <strong>Triangle Merchant Ltd</strong>, including work involving public institutions and property improvement projects.
           </p>
-          <p style="margin-bottom:0;">
+          <p>
             This wider experience informs our commitment to careful planning, coordination, accountability and attention to project requirements. We bring the same professional mindset to our interior solutions, recognising that every property, client and project has its own expectations.
           </p>
         </div>
@@ -389,91 +389,91 @@
         </div>
 
         <div class="experience-cta-wrap">
-          <div>
-            <h4 style="font-family:var(--font-serif); font-size:22px; color:#FFFFF0; margin:0 0 6px; font-weight:400;">Ready to discuss your project requirements?</h4>
-            <p style="margin:0; font-size:14px; color:#FFFFF0;">From private residences to commercial headquarters and institutional assignments.</p>
+          <div class="experience-cta-text">
+            <h4 class="experience-cta-title">Ready to discuss your project requirements?</h4>
+            <p class="experience-cta-desc">From private residences to commercial headquarters and institutional assignments.</p>
           </div>
-          <a href="#contact" class="btn btn-hero-white" style="flex-shrink:0;">Consult With Our Team &rarr;</a>
+          <a href="#contact" class="btn btn-hero-white experience-cta-btn">Consult With Our Team &rarr;</a>
         </div>
       </div>
     </section>
 
     <!-- Showroom Section: Accra Furniture Showroom -->
-    <section class="showroom-section section-pad" id="showroom" aria-labelledby="showroom-heading" style="background-color:#FFFFFF; border-top:1px solid rgba(46,46,46,0.08); border-bottom:1px solid rgba(46,46,46,0.08);">
+    <section class="showroom-section section-pad" id="showroom" aria-labelledby="showroom-heading">
       <div class="container">
-        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:40px; flex-wrap:wrap; gap:20px;">
-          <div>
-            <span class="section-eyebrow" style="color:var(--color-walnut);">Showroom Collection</span>
-            <h2 class="section-title" id="showroom-heading" style="margin:0 0 12px; font-size:clamp(36px, 4.2vw, 56px);">On Display in Accra.</h2>
-            <p style="margin:0; color:rgba(38,37,37,0.7); font-size:15px; max-width:620px; line-height:1.6;">Discover our signature solid timber and natural stone furniture on display at our showroom, 14 Senchi Street, Airport Residential Area, Accra.</p>
+        <div class="showroom-header">
+          <div class="showroom-header-text">
+            <span class="section-eyebrow">Showroom Collection</span>
+            <h2 class="section-title" id="showroom-heading">On Display in Accra.</h2>
+            <p class="section-desc">Discover our signature solid timber and natural stone furniture on display at our showroom, 14 Senchi Street, Airport Residential Area, Accra.</p>
           </div>
-          <a href="furniture.html" class="btn btn-primary" style="padding:14px 28px; font-size:11px; letter-spacing:0.16em;">Explore Accra Collection &nearr;</a>
+          <a href="furniture.html" class="btn btn-primary showroom-header-btn">Explore Accra Collection &nearr;</a>
         </div>
 
         <div class="showroom-grid">
           <!-- 1. Ebb Bar Stool -->
-          <a href="furniture.html" style="text-decoration:none; color:inherit; display:flex; flex-direction:column;">
-            <div style="background-color:#F7F6F3; aspect-ratio:4/3; border-radius:2px; display:flex; align-items:center; justify-content:center; padding:16px; overflow:hidden;">
-              <img src="assets/showroom/item-01.png" alt="EBB BAR STOOL - TIMBER BACK" style="width:100%; height:100%; object-fit:contain; transition:transform .5s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+          <a href="furniture.html" class="showroom-card">
+            <div class="showroom-card-media">
+              <img src="assets/showroom/item-01.png" alt="EBB BAR STOOL - TIMBER BACK" loading="lazy">
             </div>
-            <div style="padding-top:14px;">
-              <h4 style="font-size:12.5px; letter-spacing:0.12em; text-transform:uppercase; margin:0 0 6px; font-weight:500;">EBB BAR STOOL - TIMBER BACK</h4>
-              <p style="margin:0; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#2E7D32;">On Display in Accra</p>
+            <div class="showroom-card-body">
+              <h3 class="showroom-card-title">EBB BAR STOOL - TIMBER BACK</h3>
+              <span class="showroom-card-status">On Display in Accra</span>
             </div>
           </a>
 
           <!-- 2. Drift Coffee Table Stone -->
-          <a href="furniture.html" style="text-decoration:none; color:inherit; display:flex; flex-direction:column;">
-            <div style="background-color:#F7F6F3; aspect-ratio:4/3; border-radius:2px; display:flex; align-items:center; justify-content:center; padding:16px; overflow:hidden;">
-              <img src="assets/showroom/item-06.png" alt="DRIFT COFFEE TABLE - STONE" style="width:100%; height:100%; object-fit:contain; transition:transform .5s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+          <a href="furniture.html" class="showroom-card">
+            <div class="showroom-card-media">
+              <img src="assets/showroom/item-06.png" alt="DRIFT COFFEE TABLE - STONE" loading="lazy">
             </div>
-            <div style="padding-top:14px;">
-              <h4 style="font-size:12.5px; letter-spacing:0.12em; text-transform:uppercase; margin:0 0 6px; font-weight:500;">DRIFT COFFEE TABLE - STONE</h4>
-              <p style="margin:0; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#2E7D32;">On Display in Accra</p>
+            <div class="showroom-card-body">
+              <h3 class="showroom-card-title">DRIFT COFFEE TABLE - STONE</h3>
+              <span class="showroom-card-status">On Display in Accra</span>
             </div>
           </a>
 
           <!-- 3. Forum Sofa -->
-          <a href="furniture.html" style="text-decoration:none; color:inherit; display:flex; flex-direction:column;">
-            <div style="background-color:#F7F6F3; aspect-ratio:4/3; border-radius:2px; display:flex; align-items:center; justify-content:center; padding:16px; overflow:hidden;">
-              <img src="assets/showroom/item-05.png" alt="FORUM 2.5 SEATER SOFA" style="width:100%; height:100%; object-fit:contain; transition:transform .5s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+          <a href="furniture.html" class="showroom-card">
+            <div class="showroom-card-media">
+              <img src="assets/showroom/item-05.png" alt="FORUM 2.5 SEATER SOFA" loading="lazy">
             </div>
-            <div style="padding-top:14px;">
-              <h4 style="font-size:12.5px; letter-spacing:0.12em; text-transform:uppercase; margin:0 0 6px; font-weight:500;">FORUM 2.5 SEATER SOFA</h4>
-              <p style="margin:0; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#2E7D32;">On Display in Accra</p>
+            <div class="showroom-card-body">
+              <h3 class="showroom-card-title">FORUM 2.5 SEATER SOFA</h3>
+              <span class="showroom-card-status">On Display in Accra</span>
             </div>
           </a>
 
           <!-- 4. Drift Square Table Timber -->
-          <a href="furniture.html" style="text-decoration:none; color:inherit; display:flex; flex-direction:column;">
-            <div style="background-color:#F7F6F3; aspect-ratio:4/3; border-radius:2px; display:flex; align-items:center; justify-content:center; padding:16px; overflow:hidden;">
-              <img src="assets/showroom/item-09.png" alt="DRIFT SQUARE COFFEE TABLE - TIMBER" style="width:100%; height:100%; object-fit:contain; transition:transform .5s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+          <a href="furniture.html" class="showroom-card">
+            <div class="showroom-card-media">
+              <img src="assets/showroom/item-09.png" alt="DRIFT SQUARE COFFEE TABLE - TIMBER" loading="lazy">
             </div>
-            <div style="padding-top:14px;">
-              <h4 style="font-size:12.5px; letter-spacing:0.12em; text-transform:uppercase; margin:0 0 6px; font-weight:500;">DRIFT SQUARE COFFEE TABLE - TIMBER</h4>
-              <p style="margin:0; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#2E7D32;">On Display in Accra</p>
+            <div class="showroom-card-body">
+              <h3 class="showroom-card-title">DRIFT SQUARE COFFEE TABLE - TIMBER</h3>
+              <span class="showroom-card-status">On Display in Accra</span>
             </div>
           </a>
 
           <!-- 5. Willow Nesting Tables -->
-          <a href="furniture.html" style="text-decoration:none; color:inherit; display:flex; flex-direction:column;">
-            <div style="background-color:#F7F6F3; aspect-ratio:4/3; border-radius:2px; display:flex; align-items:center; justify-content:center; padding:16px; overflow:hidden;">
-              <img src="assets/showroom/item-12.png" alt="WILLOW MEDIUM NESTING COFFEE TABLES" style="width:100%; height:100%; object-fit:contain; transition:transform .5s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+          <a href="furniture.html" class="showroom-card">
+            <div class="showroom-card-media">
+              <img src="assets/showroom/item-12.png" alt="WILLOW MEDIUM NESTING COFFEE TABLES" loading="lazy">
             </div>
-            <div style="padding-top:14px;">
-              <h4 style="font-size:12.5px; letter-spacing:0.12em; text-transform:uppercase; margin:0 0 6px; font-weight:500;">WILLOW MEDIUM NESTING TABLES</h4>
-              <p style="margin:0; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#2E7D32;">On Display in Accra</p>
+            <div class="showroom-card-body">
+              <h3 class="showroom-card-title">WILLOW MEDIUM NESTING TABLES</h3>
+              <span class="showroom-card-status">On Display in Accra</span>
             </div>
           </a>
 
           <!-- 6. Willow Coffee Table -->
-          <a href="furniture.html" style="text-decoration:none; color:inherit; display:flex; flex-direction:column;">
-            <div style="background-color:#F7F6F3; aspect-ratio:4/3; border-radius:2px; display:flex; align-items:center; justify-content:center; padding:16px; overflow:hidden;">
-              <img src="assets/showroom/item-11.png" alt="WILLOW COFFEE TABLE" style="width:100%; height:100%; object-fit:contain; transition:transform .5s ease;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+          <a href="furniture.html" class="showroom-card">
+            <div class="showroom-card-media">
+              <img src="assets/showroom/item-11.png" alt="WILLOW COFFEE TABLE" loading="lazy">
             </div>
-            <div style="padding-top:14px;">
-              <h4 style="font-size:12.5px; letter-spacing:0.12em; text-transform:uppercase; margin:0 0 6px; font-weight:500;">WILLOW COFFEE TABLE</h4>
-              <p style="margin:0; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:#2E7D32;">On Display in Accra</p>
+            <div class="showroom-card-body">
+              <h3 class="showroom-card-title">WILLOW COFFEE TABLE</h3>
+              <span class="showroom-card-status">On Display in Accra</span>
             </div>
           </a>
         </div>
