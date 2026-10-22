@@ -293,6 +293,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initStaggerHeaders();
 
+  // 3d. Sitewide Smooth Cinematic Scroll Motion Design
+  function initCinematicScrollReveals() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('.cinematic-reveal, .stagger-entrance').forEach(el => {
+        el.classList.add('is-in-view');
+      });
+      return;
+    }
+
+    // Auto-tag key narrative blocks and cards for choreographed cinematic entrance
+    const narrative = document.querySelector('.studio-narrative');
+    if (narrative) narrative.classList.add('cinematic-reveal');
+
+    const grids = document.querySelectorAll('.pillars-grid, .experience-grid, .showroom-grid');
+    grids.forEach(grid => {
+      const items = grid.children;
+      Array.from(items).forEach((item, idx) => {
+        item.classList.add('stagger-entrance');
+        item.style.setProperty('--item-idx', idx);
+      });
+    });
+
+    const ctaWrap = document.querySelector('.experience-cta-wrap');
+    if (ctaWrap) ctaWrap.classList.add('cinematic-reveal');
+
+    const contactLeft = document.querySelector('.contact-left');
+    const contactFormWrap = document.querySelector('.contact-form-wrap');
+    if (contactLeft) contactLeft.classList.add('cinematic-reveal');
+    if (contactFormWrap) contactFormWrap.classList.add('cinematic-reveal');
+
+    const revealObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in-view');
+          obs.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    document.querySelectorAll('.cinematic-reveal, .stagger-entrance').forEach(el => {
+      revealObserver.observe(el);
+    });
+  }
+
+  initCinematicScrollReveals();
+
   // 3c. Hero Video Seamless Autoplay & Infinite Loop
   if (heroVideo) {
     heroVideo.setAttribute('playsinline', '');
