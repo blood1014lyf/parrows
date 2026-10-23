@@ -282,8 +282,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     }, {
-      threshold: 0.15,
-      rootMargin: '0px 0px -40px 0px'
+      threshold: 0.08,
+      rootMargin: '0px 0px 40px 0px'
     });
 
     headers.forEach(header => {
@@ -331,8 +331,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     }, {
-      threshold: 0.12,
-      rootMargin: '0px 0px -40px 0px'
+      threshold: 0.06,
+      rootMargin: '0px 0px 60px 0px'
     });
 
     document.querySelectorAll('.cinematic-reveal, .stagger-entrance').forEach(el => {
